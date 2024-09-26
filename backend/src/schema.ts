@@ -1,0 +1,64 @@
+export const typeDefs = `#graphql
+    type Query {
+        "Test Query"
+        hello: String
+        "Query for fetching all foods"
+        getFoods: [Food]
+        "Query for fetching single Food"
+        getFood(foodId: String): Food
+    }
+
+    type Mutation {
+        "Mutation to add User"
+        addUser(input: UserInput): User
+        "Mutation to add Food"
+        addFood(input: FoodInput): Food
+    }
+
+    "User type which holds information for user"
+    type User {
+        id: ID
+        name: String
+        email: String
+        password: String
+        dailyNutrients: [NutrientCard]
+    }
+
+    "User input for creating user type"
+    input UserInput {
+        name: String
+        email: String
+        password: String
+        dailyNutrients: [String]
+    }
+
+    "Nutrient card type which holds information for each nutrient card"
+    type NutrientCard {
+        id: ID
+        user: User
+        dailyCalories: Int
+        dailyProteins: Int
+        dailyCarbohydrates: Int
+        dailyFats: Int
+        foodsList: [Food]
+    }
+
+    "Food type which holds information of each food"
+    type Food {
+        id: ID!
+        name: String!
+        calories: Int!
+        proteins: Int!
+        carbohydrates: Int!
+        fats: Int!
+    }
+
+    "Food input for creating food object"
+    input FoodInput {
+        name: String!
+        calories: Int!
+        proteins: Int!
+        carbohydrates: Int!
+        fats: Int!
+    }
+`;
