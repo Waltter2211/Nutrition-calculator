@@ -1,7 +1,15 @@
+/* dailyCalories: Int!
+dailyProteins: Int!
+dailyCarbohydrates: Int!
+dailyFats: Int!
+foodsList: [String]! */
+
 export const typeDefs = `#graphql
     type Query {
         "Test Query"
         hello: String
+        "Query for fetching user"
+        getUser(userId: String): User
         "Query for fetching all foods"
         getFoods: [Food]
         "Query for fetching single Food"
@@ -11,41 +19,51 @@ export const typeDefs = `#graphql
     type Mutation {
         "Mutation to add User"
         addUser(input: UserInput): User
+        "Mutation to add NutrientCard"
+        addNutrientCard(input: NutrientCardInput): NutrientCard
         "Mutation to add Food"
         addFood(input: FoodInput): Food
+        "Mutation to add Food for user"
+        addFoodToUser(input: AddFoodToUserInput): User
     }
 
     "User type which holds information for user"
     type User {
-        id: ID
-        name: String
-        email: String
-        password: String
-        dailyNutrients: [NutrientCard]
+        _id: ID
+        name: String!
+        email: String!
+        password: String!
+        dailyNutrients: [NutrientCard]!
     }
 
     "User input for creating user type"
     input UserInput {
-        name: String
-        email: String
-        password: String
-        dailyNutrients: [String]
+        name: String!
+        email: String!
+        password: String!
+        dailyNutrients: [String]!
     }
 
     "Nutrient card type which holds information for each nutrient card"
     type NutrientCard {
-        id: ID
-        user: User
-        dailyCalories: Int
-        dailyProteins: Int
-        dailyCarbohydrates: Int
-        dailyFats: Int
-        foodsList: [Food]
+        _id: ID!
+        user: User!
+        dailyCalories: Int!
+        dailyProteins: Int!
+        dailyCarbohydrates: Int!
+        dailyFats: Int!
+        foodsList: [Food!]!
+        addedDate: String
+    }
+
+    "NutrientCard input for creating nutrient card object"
+    input NutrientCardInput {
+        user: String!
     }
 
     "Food type which holds information of each food"
     type Food {
-        id: ID!
+        _id: ID!
         name: String!
         calories: Int!
         proteins: Int!
@@ -60,5 +78,11 @@ export const typeDefs = `#graphql
         proteins: Int!
         carbohydrates: Int!
         fats: Int!
+    }
+
+    "AddFoodToUser input for adding food item to user's nutrient card"
+    input AddFoodToUserInput {
+        userId: String!
+        foodId: String!
     }
 `;

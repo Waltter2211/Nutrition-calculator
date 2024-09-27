@@ -2,11 +2,11 @@ import mongoose, { Types } from "mongoose";
 
 // Schema for nutrient card which holds information what User has eaten during that day
 const nutrientCardSchema = new mongoose.Schema({
-    user: [{
+    user: {
         type: Types.ObjectId,
         ref: 'users',
         required: true,
-    }],
+    },
     dailyCalories: {
         type: Number,
         required: true,
@@ -31,7 +31,11 @@ const nutrientCardSchema = new mongoose.Schema({
         type: [Types.ObjectId],
         ref: 'foods',
         required: true
-    }]
+    }],
+    addedDate: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 
-export const NutrientCard = mongoose.model('nutrientCards', nutrientCardSchema)
+export const NutrientCard = mongoose.model('nutrientcards', nutrientCardSchema)
