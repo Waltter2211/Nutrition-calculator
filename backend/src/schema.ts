@@ -1,9 +1,3 @@
-/* dailyCalories: Int!
-dailyProteins: Int!
-dailyCarbohydrates: Int!
-dailyFats: Int!
-foodsList: [String]! */
-
 export const typeDefs = `#graphql
     type Query {
         "Test Query"
@@ -24,7 +18,7 @@ export const typeDefs = `#graphql
         "Mutation to add Food"
         addFood(input: FoodInput): Food
         "Mutation to add Food for user"
-        addFoodToUser(input: AddFoodToUserInput): User
+        addFoodToUser(input: AddFoodToUserInput): UpdateSuccess
     }
 
     "User type which holds information for user"
@@ -41,7 +35,6 @@ export const typeDefs = `#graphql
         name: String!
         email: String!
         password: String!
-        dailyNutrients: [String]!
     }
 
     "Nutrient card type which holds information for each nutrient card"
@@ -84,5 +77,13 @@ export const typeDefs = `#graphql
     input AddFoodToUserInput {
         userId: String!
         foodId: String!
+    }
+
+    "Update success type for successfully updating database"
+    type UpdateSuccess {
+        acknowledged: Boolean
+        modifiedCount: Int
+        upsertedId: String
+        matchedCount: Int
     }
 `;
