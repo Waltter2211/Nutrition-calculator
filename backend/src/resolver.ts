@@ -57,14 +57,55 @@ export const resolvers = {
       }
     },
 
-    // TODO: update user info resolver
-
-    // TODO: delete user resolver
-
-    // TODO: delete nutrient card resolver
-
-    // TODO: delete food resolver
-
+    // Resolver function to update user information
+    updateUserInfo: async (_:any, { input }:any) => {
+      // Try to find user with id
+      try {
+        const foundUser = await User.findById(input._id)
+        // If user is found with provided id
+        if (foundUser) {
+          // Update user fields with new information
+          foundUser.name = input.name
+          foundUser.email = input.email
+          foundUser.password = input.password
+          // Update user with new user information to database
+          return await User.updateOne({ _id: foundUser._id }, foundUser)
+        }
+      } catch (error) {
+        // Returns error on failure
+        return error
+      }
+    },
+    // Resolver function to delete user
+    deleteUser: async (_:any, { input }:any) => {
+      // Try to delete user from database
+      try {
+        return await User.deleteOne({ _id: input })
+      } catch (error) {
+        // Returns error on failure
+        return error
+      }
+    },
+    // Resolver function to delete nutrient card from user
+    deleteNutrientCard: async (_:any, { input }:any) => {
+      // Try to delete nutrient card from database
+      try {
+        return await NutrientCard.deleteOne({ _id: input })
+      } catch (error) {
+        // Returns error on failure
+        return error
+      }
+    },
+    // Resolver function to delete food
+    deleteFood: async (_:any, { input }:any) => {
+      // Try to delete food from database
+      try {
+        return await Food.deleteOne({ _id: input })
+      } catch (error) {
+        // Returns error on failure
+        return error
+      }
+    },
     // Resolver for adding food
     addFood: async (_:any, { input }:any) => {
       // First builds Food object

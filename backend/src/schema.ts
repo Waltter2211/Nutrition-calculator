@@ -12,13 +12,19 @@ export const typeDefs = `#graphql
 
     type Mutation {
         "Mutation to add User"
-        addUser(input: UserInput): User
-        "Mutation to add NutrientCard"
-        addNutrientCard(input: NutrientCardInput): NutrientCard
+        addUser(input: CreateUserInput): User
         "Mutation to add Food"
         addFood(input: FoodInput): Food
         "Mutation to add Food for user"
         addFoodToUser(input: AddFoodToUserInput): UpdateSuccess
+        "Mutation to update user"
+        updateUserInfo(input: UpdateUserInput): UpdateSuccess
+        "Mutation to delete user"
+        deleteUser(input: String): UpdateSuccess
+        "Mutation to delete nutrient card"
+        deleteNutrientCard(input: String): UpdateSuccess
+        "Mutation to delete food"
+        deleteFood(input: String): UpdateSuccess
     }
 
     "User type which holds information for user"
@@ -31,7 +37,15 @@ export const typeDefs = `#graphql
     }
 
     "User input for creating user type"
-    input UserInput {
+    input CreateUserInput {
+        name: String!
+        email: String!
+        password: String!
+    }
+
+    "User input for updating user type"
+    input UpdateUserInput {
+        _id: ID!
         name: String!
         email: String!
         password: String!
@@ -45,7 +59,7 @@ export const typeDefs = `#graphql
         dailyProteins: Int!
         dailyCarbohydrates: Int!
         dailyFats: Int!
-        foodsList: [Food!]!
+        foodsList: [Food]!
         addedDate: String
     }
 
