@@ -22,7 +22,7 @@ export const typeDefs = `#graphql
         "Mutation to update user"
         updateUserInfo(input: UpdateUserInput): UpdateSuccess
         "Mutation to delete user"
-        deleteUser(input: String): UpdateSuccess
+        deleteUser(input: DeleteUserInput): UpdateSuccess
         "Mutation to delete nutrient card"
         deleteNutrientCard(input: String): UpdateSuccess
         "Mutation to delete food"
@@ -66,6 +66,12 @@ export const typeDefs = `#graphql
         token: String!
     }
 
+    "User input for deleting user type"
+    input DeleteUserInput {
+        _id: ID!
+        token: String!
+    }
+
     "Nutrient card type which holds information for each nutrient card"
     type NutrientCard {
         _id: ID!
@@ -80,13 +86,13 @@ export const typeDefs = `#graphql
 
     "NutrientCard input for creating nutrient card object"
     input NutrientCardInput {
-        user: String!
+        userId: String!
     }
 
     "Meal type which holds information of food eaten"
     type Meal {
         _id: ID!
-        userId: User!
+        user: User!
         foodEaten: Food!
         caloriesCount: Int!
         proteinsCount: Int!

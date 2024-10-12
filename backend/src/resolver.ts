@@ -103,10 +103,12 @@ export const resolvers = {
           const foundUser = await User.findById(input._id);
           // If user is found with provided id
           if (foundUser) {
+            // Hash new password
+            const hashedPass = await bcrypt.hash(input.password, 10);
             // Update user fields with new information
             foundUser.name = input.name;
             foundUser.email = input.email;
-            foundUser.password = input.password;
+            foundUser.password = hashedPass;
             // Update user with new user information to database
             return await User.updateOne({ _id: foundUser._id }, foundUser);
           }
@@ -126,7 +128,7 @@ export const resolvers = {
         // Try to verify users token
         const verifiedToken = jwtTokenVerifier(input.token);
         if (verifiedToken) {
-          return await User.deleteOne({ _id: input });
+          return await User.deleteOne({ _id: input._id });
         } else {
           throw Error("Invalid token");
         }
@@ -195,40 +197,34 @@ export const resolvers = {
               });
               // If nutrient card is found for current day push food object to foods list
               if (foundNutrientCard) {
-                try {
-                  const mealObj = {
-                    userId: foundUser._id,
-                    foodEaten: foundFood._id,
-                    caloriesCount: input.caloriesCount,
-                    proteinsCount: input.proteinsCount,
-                    carbohydratesCount: input.carbohydratesCount,
-                    fatsCount: input.fatsCount,
-                  };
+                const mealObj = {
+                  user: foundUser._id,
+                  foodEaten: foundFood._id,
+                  caloriesCount: input.caloriesCount,
+                  proteinsCount: input.proteinsCount,
+                  carbohydratesCount: input.carbohydratesCount,
+                  fatsCount: input.fatsCount,
+                };
+                // Create new meal object which stores information about food eaten
+                const createdMeal = await Meal.create(mealObj);
 
-                  // Create new meal object which stores information about food eaten
-                  const createdMeal = await Meal.create(mealObj);
-
-                  // Update nutrient card values and push added food object to foods list
-                  foundNutrientCard.dailyCalories += createdMeal.caloriesCount;
-                  foundNutrientCard.dailyProteins += createdMeal.proteinsCount;
-                  foundNutrientCard.dailyCarbohydrates +=
-                    createdMeal.carbohydratesCount;
-                  foundNutrientCard.dailyFats += createdMeal.fatsCount;
-                  foundNutrientCard.mealsList.push(createdMeal._id);
-                  // Update nutrient card into database
-                  return await NutrientCard.updateOne(
-                    { _id: foundNutrientCard._id },
-                    foundNutrientCard
-                  );
-                } catch (error) {
-                  // Returns error on failure
-                  return error;
-                }
+                // Update nutrient card values and push added food object to foods list
+                foundNutrientCard.dailyCalories += createdMeal.caloriesCount;
+                foundNutrientCard.dailyProteins += createdMeal.proteinsCount;
+                foundNutrientCard.dailyCarbohydrates +=
+                  createdMeal.carbohydratesCount;
+                foundNutrientCard.dailyFats += createdMeal.fatsCount;
+                foundNutrientCard.mealsList.push(createdMeal._id);
+                // Update nutrient card into database
+                return await NutrientCard.updateOne(
+                  { _id: foundNutrientCard._id },
+                  foundNutrientCard
+                );
               }
               // Else create new food card with found food nutrient details
               else {
                 const mealObj = {
-                  userId: foundUser._id,
+                  user: foundUser._id,
                   foodEaten: foundFood._id,
                   caloriesCount: input.caloriesCount,
                   proteinsCount: input.proteinsCount,
@@ -329,6 +325,17 @@ export const resolvers = {
       // Try to fetch food by foodId
       try {
         return await Food.findById(parent.foodEaten);
+      } catch (error) {
+        // Returns error on failure
+        return error;
+      }
+    },
+    // Resolver function for fetching user for meal
+    user: async (parent: any) => {
+      // Try to fetch user by userId
+      console.log(parent)
+      try {
+        return await User.findById(parent.user);
       } catch (error) {
         // Returns error on failure
         return error;

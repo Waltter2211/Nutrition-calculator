@@ -3,7 +3,7 @@ import mongoose, { Types } from "mongoose";
 // Schema for a single food
 const mealSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: Types.ObjectId,
       ref: "users",
       required: true,
