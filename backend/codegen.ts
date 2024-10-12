@@ -1,11 +1,11 @@
-import type { CodegenConfig } from '@graphql-codegen/cli';
+import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-    schema: 'http://localhost:4000',
-    generates: {
-        './src/types.ts': {
-            plugins: ['typescript', 'typescript-resolvers'],
-            /* config: {
+  schema: "http://localhost:4000",
+  generates: {
+    "./src/types.ts": {
+      plugins: ["typescript", "typescript-resolvers"],
+      /* config: {
                 mappers: {
                     User: './src/models/user.ts',
                     NutrientCard: './src/models/nutrientCard.ts',
@@ -13,8 +13,8 @@ const config: CodegenConfig = {
                     dailyNutrients: './src/models.ts#DailyNutrients'
                 }
             } */
-        },
-    }
+    },
+  },
 };
 
 export default config;

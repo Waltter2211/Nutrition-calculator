@@ -28,10 +28,10 @@ const nutrientCardSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    foodsList: [
+    mealsList: [
       {
         type: [Types.ObjectId],
-        ref: "foods",
+        ref: "meals",
         required: true,
       },
     ],
