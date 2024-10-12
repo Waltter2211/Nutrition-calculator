@@ -1,25 +1,30 @@
 import mongoose, { Types } from "mongoose";
 
 // Schema for User
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    dailyNutrients: [{
+    dailyNutrients: [
+      {
         type: [Types.ObjectId],
-        ref: 'nutrientCards',
-        required: true
-    }]
-}, { timestamps: true });
+        ref: "nutrientCards",
+        required: true,
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-export const User = mongoose.model('users', userSchema)
+export const User = mongoose.model("users", userSchema);

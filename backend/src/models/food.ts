@@ -1,32 +1,35 @@
 import mongoose, { Types } from "mongoose";
 
 // Schema for a single food
-const foodSchema = new mongoose.Schema({
+const foodSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     calories: {
-        type: Number,
-        required: true,
-        default: 0
+      type: Number,
+      required: true,
+      default: 0,
     },
     proteins: {
-        type: Number,
-        required: true,
-        default: 0
+      type: Number,
+      required: true,
+      default: 0,
     },
     carbohydrates: {
-        type: Number,
-        required: true,
-        default: 0
+      type: Number,
+      required: true,
+      default: 0,
     },
     fats: {
-        type: Number,
-        required: true,
-        default: 0
-    }
-}, { timestamps: true });
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
 
-export const Food = mongoose.model('foods', foodSchema)
+export const Food = mongoose.model("foods", foodSchema);

@@ -11,6 +11,8 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
+        "Mutation to login"
+        loginUser(input: LoginInput): LoginInfo
         "Mutation to add User"
         addUser(input: CreateUserInput): User
         "Mutation to add Food"
@@ -25,6 +27,18 @@ export const typeDefs = `#graphql
         deleteNutrientCard(input: String): UpdateSuccess
         "Mutation to delete food"
         deleteFood(input: String): UpdateSuccess
+    }
+
+    "Login type which has user email and login token"
+    type LoginInfo {
+        email: String!
+        token: String!
+    }
+
+    "Login input type which has user information"
+    input LoginInput {
+        email: String!
+        password: String!
     }
 
     "User type which holds information for user"
