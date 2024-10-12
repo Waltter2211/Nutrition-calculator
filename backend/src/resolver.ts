@@ -333,7 +333,6 @@ export const resolvers = {
     // Resolver function for fetching user for meal
     user: async (parent: any) => {
       // Try to fetch user by userId
-      console.log(parent)
       try {
         return await User.findById(parent.user);
       } catch (error) {
