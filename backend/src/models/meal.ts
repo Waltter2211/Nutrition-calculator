@@ -1,12 +1,17 @@
 import mongoose, { Types } from "mongoose";
 
-// Schema for a single food
+// Schema for a single meal
 const mealSchema = new mongoose.Schema(
   {
     user: {
       type: Types.ObjectId,
       ref: "users",
       required: true,
+    },
+    nutrientCard: {
+      type: Types.ObjectId,
+      ref: "nutrientCards",
+      requred: true
     },
     foodEaten: {
       type: Types.ObjectId,
