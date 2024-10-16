@@ -3,8 +3,26 @@
     <div class="left-main"></div>
     <div class="right-main">
       <div class="right-text-div">
-        <h1>Welcome</h1>
-        <p>Log in to your account or register new account</p>
+        <h1>Login as existing user</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="onLoginUser()" class="login-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Email address</mat-label>
+            <input (click)="isError=false" formControlName="email" type="email" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input (click)="isError=false" formControlName="password" type="password" matInput>
+          </mat-form-field>
+          <div>
+            @if (isError) {
+              <p style="color: red; margin-bottom: 14px;">{{errorText}}</p>
+            }
+            @else {
+              <div style="padding: 20px;"></div>
+            }
+          </div>
+          <button type="submit" class="button-class" mat-button>Login</button>
+        </form>
       </div>
       <div class="buttons-div">
         <button class="button-class" routerLink="/">Back</button>

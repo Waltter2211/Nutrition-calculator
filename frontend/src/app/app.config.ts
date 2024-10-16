@@ -20,7 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideHttpClient(),
     provideApollo(() => {
       const httpLink = inject(HttpLink);
 

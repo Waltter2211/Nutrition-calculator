@@ -59,7 +59,7 @@ export class RegisterComponent {
           },
         })
         .subscribe({
-          next: ({ data }) => {
+          next: () => {
             this.router.navigateByUrl('/');
           },
           error: (error) => {
