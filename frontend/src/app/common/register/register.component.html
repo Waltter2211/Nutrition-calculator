@@ -7,19 +7,24 @@
         <form [formGroup]="registerForm" (ngSubmit)="onRegisterUser()" class="register-form">
           <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
-            <input formControlName="username" type="text" matInput>
+            <input (click)="isError=false" formControlName="username" type="text" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Email address</mat-label>
-            <input formControlName="email" type="email" matInput>
+            <input (click)="isError=false" formControlName="email" type="email" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input formControlName="password" type="password" matInput>
+            <input (click)="isError=false" formControlName="password" type="password" matInput>
           </mat-form-field>
-          @if (isError) {
-            <p style="color: red; padding: 20px;">Email already in use</p>
-          }
+          <div>
+            @if (isError) {
+              <p style="color: red; margin-bottom: 14px;">{{errorText}}</p>
+            }
+            @else {
+              <div style="padding: 20px;"></div>
+            }
+          </div>
           <button type="submit" class="button-class" mat-button>Register</button>
         </form>
       </div>

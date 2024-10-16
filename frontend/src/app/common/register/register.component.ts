@@ -28,21 +28,17 @@ import { REGISTER_USER } from '../../mutations/registerUserMutation';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(
-    private readonly apollo: Apollo, 
-    private router: Router,
-  ) {}
+  constructor(private readonly apollo: Apollo, private router: Router) {}
 
-  isError = false
+  isError = false;
+  errorText = '';
 
   registerForm = new FormGroup({
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
     ]),
-    email: new FormControl('', [
-      Validators.required, 
-      Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
@@ -62,14 +58,14 @@ export class RegisterComponent {
             },
           },
         })
-        .subscribe(({ data }) => {
-          this.router.navigateByUrl('/')
-          console.log("data")
-          /* TODO: error logiikka jos user jo luotu
-          this.isError = true
-          setTimeout(() => {
-            this.isError = false
-          }, 5000) */
+        .subscribe({
+          next: ({ data }) => {
+            this.router.navigateByUrl('/');
+          },
+          error: (error) => {
+            this.isError = true;
+            this.errorText = error;
+          },
         });
     }
   }

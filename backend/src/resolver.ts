@@ -91,20 +91,21 @@ export const resolvers = {
 
     // Resolver for adding user
     addUser: async (_: any, { input }: any) => {
-      // First builds User object and crypts password
-      const hashedPass = await bcrypt.hash(input.password, 10);
-      const userObj = {
-        username: input.username,
-        email: input.email,
-        password: hashedPass,
-        dailyNutrients: [],
-      };
       // Try to create User with user object
       try {
+        // First builds User object and crypts password
+        const hashedPass = await bcrypt.hash(input.password, 10);
+        const userObj = {
+          username: input.username,
+          email: input.email,
+          password: hashedPass,
+          dailyNutrients: [],
+        };
         return await User.create(userObj);
       } catch (error) {
         // Returns error on failure
-        return error;
+        throw new Error("Email in use");
+        /* return error; */
       }
     },
 
