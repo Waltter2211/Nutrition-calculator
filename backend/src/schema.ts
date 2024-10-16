@@ -47,7 +47,7 @@ export const typeDefs = `#graphql
     "User type which holds information for user"
     type User {
         _id: ID
-        name: String!
+        username: String!
         email: String!
         password: String!
         dailyNutrients: [NutrientCard]!
@@ -55,7 +55,7 @@ export const typeDefs = `#graphql
 
     "User input for creating user type"
     input CreateUserInput {
-        name: String!
+        username: String!
         email: String!
         password: String!
     }
@@ -63,7 +63,7 @@ export const typeDefs = `#graphql
     "User input for updating user type"
     input UpdateUserInput {
         token: String!
-        name: String!
+        username: String!
         email: String!
         password: String!
     }

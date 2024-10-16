@@ -57,12 +57,6 @@
 
 .left-main {
   width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: skyblue;
-  color: white;
   border-radius: 30px;
   /* box-shadow: 10px 10px 20px rgb(71, 71, 71); */
   /* padding: 20px; */
@@ -70,33 +64,6 @@
   background-size: cover;
   overflow: hidden;
   animation: 1s ease-out 0s 1 slideToMiddleLeft;
-}
-
-.left-text-div-up {
-  width: 100%;
-  height: 50%;
-  /* background-color: yellow; */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 50px;
-  padding-right: 10%;
-  animation: 1.2s ease-out 0s 1 textAppear;
-}
-
-.left-text-div-down {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding-left: 5%;
-  padding-right: 15%;
-  padding-bottom: 70px;
-  text-align: center;
-  animation: 1.2s ease-out 0s 1 textAppear;
 }
 
 .right-main {
@@ -127,6 +94,10 @@
   animation: 1.2s ease-out 0s 1 textAppear;
 }
 
+.right-text-div > h1 {
+  color: rgb(62, 142, 218);
+}
+
 .buttons-div {
   width: 100%;
   /* background-color: green; */
@@ -138,12 +109,12 @@
   animation: 1.2s ease-out 0s 1 textAppear;
 }
 
-.buttons-div > button {
-  width: 35%;
+.button-class {
+  width: 25%;
   /* background-color: rgb(24, 126, 221); */
-  background-image: linear-gradient(rgb(135, 193, 226), rgb(0, 153, 255));
+  background-color: rgb(62, 142, 218);
   color: white;
-  padding: 20px;
+  padding: 10px;
   border-radius: 30px;
   border: 0px;
   font-size: larger;
@@ -152,7 +123,7 @@
   transition: 0.5s;
 }
 
-.buttons-div > button:hover {
+.button-class:hover {
   color: rgb(0, 153, 255);
   background-image: none;
   background-color: white;

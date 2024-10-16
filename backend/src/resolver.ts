@@ -94,7 +94,7 @@ export const resolvers = {
       // First builds User object and crypts password
       const hashedPass = await bcrypt.hash(input.password, 10);
       const userObj = {
-        name: input.name,
+        username: input.username,
         email: input.email,
         password: hashedPass,
         dailyNutrients: [],
@@ -121,7 +121,7 @@ export const resolvers = {
             // Hash new password
             const hashedPass = await bcrypt.hash(input.password, 10);
             // Update user fields with new information
-            foundUser.name = input.name;
+            foundUser.username = input.username;
             foundUser.email = input.email;
             foundUser.password = hashedPass;
             // Update user with new user information to database

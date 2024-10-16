@@ -3,7 +3,7 @@ import mongoose, { Types } from "mongoose";
 // Schema for User
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
     },

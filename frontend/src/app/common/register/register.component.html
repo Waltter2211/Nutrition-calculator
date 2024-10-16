@@ -1,26 +1,30 @@
 <div class="main-content">
   <div class="main-content-card">
-    <div class="left-main">
-      <div class="left-text-div-up">
-        <h1>N</h1>
-        <h1>Nutritrack</h1>
-      </div>
-      <div class="left-text-div-down">
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt,
-          eos eius. Cumque, reiciendis ea officia optio laborum nostrum, enim
-          quo rem aut labore itaque modi facilis necessitatibus ullam sit.
-          Adipisci.
-        </p>
-      </div>
-    </div>
+    <div class="left-main"></div>
     <div class="right-main">
       <div class="right-text-div">
-        <h1 style="color: rgb(62, 142, 218)">Welcome</h1>
-        <p>Log in to your account or register new account</p>
+        <h1>Register new account</h1>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegisterUser()" class="register-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input formControlName="username" type="text" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email address</mat-label>
+            <input formControlName="email" type="email" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" type="password" matInput>
+          </mat-form-field>
+          @if (isError) {
+            <p style="color: red; padding: 20px;">Email already in use</p>
+          }
+          <button type="submit" class="button-class" mat-button>Register</button>
+        </form>
       </div>
       <div class="buttons-div">
-        <button routerLink="/">Back</button>
+        <button class="button-class" routerLink="/">Back</button>
       </div>
     </div>
   </div>
