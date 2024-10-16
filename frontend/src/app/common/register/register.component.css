@@ -1,0 +1,160 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI";
+}
+
+@keyframes slideToMiddleLeft {
+  0% {
+    transform: translateX(-50%);
+    box-shadow: 10px 10px 20px rgb(71, 71, 71);
+  }
+  100% {
+    transform: translateX(0%);
+    box-shadow: 10px 10px 20px rgb(71, 71, 71);
+  }
+}
+
+@keyframes slideToMiddleRight {
+  0% {
+    transform: translateX(40%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes textAppear {
+  0% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+.main-content {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  background-color: rgb(245, 245, 245);
+}
+
+.main-content-card {
+  width: 70%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  position: relative;
+  left: 1.5%;
+  /* background-color: yellow; */
+}
+
+.left-main {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: skyblue;
+  color: white;
+  border-radius: 30px;
+  /* box-shadow: 10px 10px 20px rgb(71, 71, 71); */
+  /* padding: 20px; */
+  background-image: url("https://img.freepik.com/free-vector/background-abstract-gradient-color-style_483537-3675.jpg");
+  background-size: cover;
+  overflow: hidden;
+  animation: 1s ease-out 0s 1 slideToMiddleLeft;
+}
+
+.left-text-div-up {
+  width: 100%;
+  height: 50%;
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 50px;
+  padding-right: 10%;
+  animation: 1.2s ease-out 0s 1 textAppear;
+}
+
+.left-text-div-down {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 15%;
+  padding-bottom: 70px;
+  text-align: center;
+  animation: 1.2s ease-out 0s 1 textAppear;
+}
+
+.right-main {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  position: absolute;
+  left: 25%;
+  border-radius: 30px;
+  box-shadow: 10px 10px 20px rgb(71, 71, 71);
+  padding: 20px;
+  row-gap: 100px;
+  animation: 1s ease-out 0s 1 slideToMiddleRight;
+}
+
+.right-text-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+  font-weight: 500;
+  animation: 1.2s ease-out 0s 1 textAppear;
+}
+
+.buttons-div {
+  width: 100%;
+  /* background-color: green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 15px;
+  animation: 1.2s ease-out 0s 1 textAppear;
+}
+
+.buttons-div > button {
+  width: 35%;
+  /* background-color: rgb(24, 126, 221); */
+  background-image: linear-gradient(rgb(135, 193, 226), rgb(0, 153, 255));
+  color: white;
+  padding: 20px;
+  border-radius: 30px;
+  border: 0px;
+  font-size: larger;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.buttons-div > button:hover {
+  color: rgb(0, 153, 255);
+  background-image: none;
+  background-color: white;
+  transition: 0.5s;
+}
