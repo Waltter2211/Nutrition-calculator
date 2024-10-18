@@ -2,8 +2,8 @@ export const typeDefs = `#graphql
     type Query {
         "Test Query"
         hello: String
-        "Query for fetching user"
-        getUser(userId: String): User
+        "Query for fetching user with token"
+        getUser(token: String): User
         "Query for fetching single Meal"
         getMeal(mealId: String): Meal
         "Query for fetching all foods"

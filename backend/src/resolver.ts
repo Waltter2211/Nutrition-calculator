@@ -13,16 +13,25 @@ export const resolvers = {
   Query: {
     // Resolver for test Query
     hello: () => "Hello",
-    // Resolver for fetching all foods
-    getUser: async (_: any, { userId }: { userId: string }) => {
-      // Try to fetch user from database by id
+    // Resolver for fetching user with token and ID
+    getUser: async (_: any, { token }: any) => {
+      // Try to verify token
       try {
-        return await User.findById(userId);
+        // Check if token is valid
+        const verifiedToken = jwtTokenVerifier(token);
+        if (typeof verifiedToken === "object") {
+          // Return found user
+          return await User.findById(verifiedToken.userId);
+        } else {
+          // Returns invalid user token on failure
+          throw new Error("Invalid user token");
+        }
       } catch (error) {
         // Returns error on failure
         return error;
       }
     },
+    // Resolver for fetching all foods
     getFoods: async () => {
       // Try to fetch all foods
       try {

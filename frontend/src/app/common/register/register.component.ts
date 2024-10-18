@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { REGISTER_USER } from '../../mutations/registerUserMutation';
 
 @Component({
@@ -28,7 +28,10 @@ import { REGISTER_USER } from '../../mutations/registerUserMutation';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private readonly apollo: Apollo, private router: Router) {}
+  constructor(
+    private readonly apollo: Apollo,
+    private router: Router,
+  ) {}
 
   isError = false;
   errorText = '';
