@@ -3,34 +3,34 @@ export const typeDefs = `#graphql
         "Test Query"
         hello: String
         "Query for fetching user with token"
-        getUser(token: String): User
+        getUser(token: String!): User
         "Query for fetching single Meal"
-        getMeal(mealId: String): Meal
+        getMeal(mealId: String!): Meal
         "Query for fetching all foods"
         getFoods: [Food]
         "Query for fetching single Food"
-        getFood(foodId: String): Food
+        getFood(foodId: String!): Food
     }
 
     type Mutation {
         "Mutation to login"
-        loginUser(input: LoginInput): LoginInfo
+        loginUser(input: LoginInput!): LoginInfo
         "Mutation to add User"
-        addUser(input: CreateUserInput): User
+        addUser(input: CreateUserInput!): User
         "Mutation to add Food for user"
-        addFoodToUser(input: AddFoodToUserInput): UpdateSuccess
+        addFoodToUser(input: AddFoodToUserInput!): UpdateSuccess
         "Mutation to update user"
-        updateUserInfo(input: UpdateUserInput): UpdateSuccess
+        updateUserInfo(input: UpdateUserInput!): UpdateSuccess
         "Mutation to delete user"
-        deleteUser(input: DeleteUserInput): UpdateSuccess
+        deleteUser(input: DeleteUserInput!): UpdateSuccess
         "Mutation to delete nutrient card"
-        deleteNutrientCard(input: String): UpdateSuccess
+        deleteNutrientCard(input: String!): UpdateSuccess
         "Mutation to add Food"
-        addFood(input: FoodInput): Food
+        addFood(input: FoodInput!): Food
         "Mutation to delete Meal"
-        deleteMealFromUser(input: DeleteMealFromUserInput): UpdateSuccess
+        deleteMealFromUser(input: DeleteMealFromUserInput!): UpdateSuccess
         "Mutation to delete food"
-        deleteFood(input: String): UpdateSuccess
+        deleteFood(input: String!): UpdateSuccess
     }
 
     "Login type which has user email and login token"
@@ -82,7 +82,7 @@ export const typeDefs = `#graphql
         dailyCarbohydrates: Int!
         dailyFats: Int!
         mealsList: [Meal]!
-        addedDate: String
+        addedDate: String!
     }
 
     "NutrientCard input for creating nutrient card object"

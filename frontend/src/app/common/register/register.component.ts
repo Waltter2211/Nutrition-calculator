@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { REGISTER_USER } from '../../mutations/registerUserMutation';
+import { MasterService } from '../../services/master.service';
 
 @Component({
   selector: 'app-register',
@@ -31,6 +32,7 @@ export class RegisterComponent {
   constructor(
     private readonly apollo: Apollo,
     private router: Router,
+    private service: MasterService
   ) {}
 
   isError = false;
@@ -50,26 +52,15 @@ export class RegisterComponent {
 
   onRegisterUser() {
     if (this.registerForm.valid) {
-      this.apollo
-        .mutate({
-          mutation: REGISTER_USER,
-          variables: {
-            input: {
-              username: this.registerForm.value.username,
-              email: this.registerForm.value.email,
-              password: this.registerForm.value.password,
-            },
-          },
-        })
-        .subscribe({
-          next: () => {
-            this.router.navigateByUrl('/');
-          },
-          error: (error) => {
-            this.isError = true;
-            this.errorText = error;
-          },
-        });
+      this.service.registerUser(this.registerForm.value).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/');
+        },
+        error: (error) => {
+          this.isError = true;
+          this.errorText = error;
+        },
+      });
     }
   }
 }

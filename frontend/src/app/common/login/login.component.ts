@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import { LOGIN_USER } from '../../mutations/loginUserMutation';
+import { MasterService } from '../../services/master.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,11 @@ import { LOGIN_USER } from '../../mutations/loginUserMutation';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(private readonly apollo: Apollo, private router: Router) {}
+  constructor(
+    private readonly apollo: Apollo,
+    private router: Router,
+    private service: MasterService
+  ) {}
 
   isError = false;
   errorText = '';
@@ -41,26 +45,16 @@ export class LoginComponent {
 
   onLoginUser() {
     if (this.loginForm.valid) {
-      this.apollo
-        .mutate({
-          mutation: LOGIN_USER,
-          variables: {
-            input: {
-              email: this.loginForm.value.email,
-              password: this.loginForm.value.password,
-            },
-          },
-        })
-        .subscribe({
-          next: ({ data }: any) => {
-            localStorage.setItem('token', data.loginUser.token);
-            this.router.navigateByUrl('/home');
-          },
-          error: (error) => {
-            this.isError = true;
-            this.errorText = error;
-          },
-        });
+      this.service.loginUser(this.loginForm.value).subscribe({
+        next: ({ data }: any) => {
+          localStorage.setItem('token', data.loginUser.token);
+          this.router.navigateByUrl('/home');
+        },
+        error: (error) => {
+          this.isError = true;
+          this.errorText = error;
+        },
+      });
     }
   }
 }

@@ -1,48 +1,47 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { GET_USER } from '../../queries/getUserQuery';
-import { UserDataType } from '../../models/types';
+import { CommonModule } from '@angular/common';
+import { NavComponent } from '../nav/nav.component';
+import { MasterService } from '../../services/master.service';
+import { DailyMacrosComponent } from '../daily-macros/daily-macros.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, NavComponent, DailyMacrosComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  constructor(private readonly apollo: Apollo) {}
-
   token = '';
-  userData: UserDataType = {
+  loading = true;
+  userData: any = {
     _id: '',
     username: '',
     email: '',
     password: '',
     dailyNutrients: [],
   };
+  constructor(
+    private readonly apollo: Apollo,
+    private service: MasterService
+  ) {}
+
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
     if (foundToken) {
       this.token = foundToken;
-      this.apollo
-        .query({
-          query: GET_USER,
-          variables: {
-            token: this.token,
-          },
-        })
-        .subscribe({
-          next: ({ data, loading }: any) => {
-            if (!loading) {
-              this.userData = data.getUser;
-              console.log(this.userData.dailyNutrients);
-            }
-          },
-          error: (error) => {
-            console.log(error);
-          },
-        });
+      this.service.getUser(this.token).valueChanges.subscribe({
+        next: ({ data, loading }: any) => {
+          this.loading = loading;
+          if (!loading && typeof data === 'object') {
+            this.userData = data.getUser;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
     } else {
       this.token = 'Error getting token';
     }
