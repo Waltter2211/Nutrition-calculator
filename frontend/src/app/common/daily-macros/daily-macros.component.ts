@@ -2,17 +2,17 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MasterService } from '../../services/master.service';
 import { DailyNutrient } from '../../models/types';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { LoadingComponent } from '../loading/loading.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-daily-macros',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, LoadingComponent],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',
 })

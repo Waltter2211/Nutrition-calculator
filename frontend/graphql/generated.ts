@@ -258,7 +258,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', _id?: string | null, username: string, email: string, password: string, dailyNutrients: Array<{ __typename?: 'NutrientCard', _id: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, addedDate: string, user: { __typename?: 'User', _id?: string | null, username: string, email: string, password: string }, mealsList: Array<{ __typename?: 'Meal', _id: string, caloriesCount: number, proteinsCount: number, carbohydratesCount: number, fatsCount: number, nutrientCard: { __typename?: 'NutrientCard', _id: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, addedDate: string }, foodEaten: { __typename?: 'Food', _id: string, name: string, calories: number, proteins: number, carbohydrates: number, fats: number } } | null> } | null> } | null };
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', _id?: string | null, username: string, email: string } | null };
 
 export const LoginUserDocument = gql`
     mutation LoginUser($input: LoginInput!) {
@@ -338,44 +338,6 @@ export const GetUserDocument = gql`
     _id
     username
     email
-    password
-    dailyNutrients {
-      _id
-      user {
-        _id
-        username
-        email
-        password
-      }
-      dailyCalories
-      dailyProteins
-      dailyCarbohydrates
-      dailyFats
-      mealsList {
-        _id
-        nutrientCard {
-          _id
-          dailyCalories
-          dailyProteins
-          dailyCarbohydrates
-          dailyFats
-          addedDate
-        }
-        foodEaten {
-          _id
-          name
-          calories
-          proteins
-          carbohydrates
-          fats
-        }
-        caloriesCount
-        proteinsCount
-        carbohydratesCount
-        fatsCount
-      }
-      addedDate
-    }
   }
 }
     `;

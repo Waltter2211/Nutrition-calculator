@@ -1,34 +1,12 @@
 <div class="main-div">
-  <app-nav></app-nav>
-  <app-daily-macros></app-daily-macros>
+  @if (loading) {
+    <div class="loading-div">
+      <app-loading></app-loading>
+    </div>
+  }
+  @else {
+    <app-nav></app-nav>
+    <app-daily-macros></app-daily-macros>
+    <app-daily-macros></app-daily-macros>
+  }
 </div>
-<!-- <p>{{ token }}</p> -->
-
-<!-- @if (!loading) {
-<p>{{ userData._id }}</p>
-<p>{{ userData.username }}</p>
-<p>{{ userData.email }}</p>
-<p>{{ userData.password }}</p>
-<div>
-  @if (userData && userData.dailyNutrients?.length > 0) { @for (nutrientCardItem
-  of userData?.dailyNutrients; track nutrientCardItem?._id) {
-  <p>{{ nutrientCardItem?._id }}</p>
-  <p>{{ nutrientCardItem?.addedDate }}</p>
-  <p>{{ nutrientCardItem?.dailyCalories }}</p>
-  <p>{{ nutrientCardItem?.dailyCarbohydrates }}</p>
-  <p>{{ nutrientCardItem?.dailyProteins }}</p>
-  <p>{{ nutrientCardItem?.dailyFats }}</p>
-  @if (userData && nutrientCardItem.mealsList.length > 0) { @for (mealItem of
-  nutrientCardItem?.mealsList; track mealItem?._id) {
-  <p>{{ mealItem?._id }}</p>
-  <p>{{ mealItem?.caloriesCount }}</p>
-  <p>{{ mealItem?.proteinsCount }}</p>
-  <p>{{ mealItem?.carbohydratesCount }}</p>
-  <p>{{ mealItem?.fatsCount }}</p>
-  <p>{{ mealItem?.foodEaten._id }}</p>
-  <p>{{ mealItem?.foodEaten.name }}</p>
-  } } } }
-</div>
-} @else {
-<p>Loading</p>
-} -->

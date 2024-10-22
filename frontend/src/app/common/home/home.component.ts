@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { NavComponent } from '../nav/nav.component';
 import { MasterService } from '../../services/master.service';
 import { DailyMacrosComponent } from '../daily-macros/daily-macros.component';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, DailyMacrosComponent],
+  imports: [CommonModule, NavComponent, DailyMacrosComponent, LoadingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -19,8 +20,6 @@ export class HomeComponent implements OnInit {
     _id: '',
     username: '',
     email: '',
-    password: '',
-    dailyNutrients: [],
   };
   constructor(
     private readonly apollo: Apollo,
