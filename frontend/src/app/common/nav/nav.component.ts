@@ -11,4 +11,5 @@ import {MatToolbarModule} from '@angular/material/toolbar';
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+  
 }

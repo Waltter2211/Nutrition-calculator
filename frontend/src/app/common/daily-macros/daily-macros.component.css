@@ -6,60 +6,125 @@
 
 .main-div {
     width: 100%;
-    background-color: yellow;
+    /* background-color: yellow; */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     row-gap: 20px;
+    column-gap: 20px;
+}
+
+.buttons-div {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.holder-div {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(250, 250, 250);
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .macro-cards-div {
-    width: 50%;
+    width: 40%;
     height: 300px;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     border-radius: 10px;
     overflow: hidden;
     padding: 10px;
-    row-gap: 10px;
     column-gap: 10px;
+    row-gap: 10px;
 }
 
 .calories-card {
     width: 49%;
     height: 50%;
-    background-color: antiquewhite;
+    background-color: coral;
     display: flex;
     flex-direction: column;
-
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .proteins-card {
     width: 49%;
     height: 50%;
-    background-color: bisque;
+    background-color: orange;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .carbs-card {
     width: 49%;
     height: 50%;
-    background-color: aqua;
+    background-color: lightblue;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .fats-card {
     width: 49%;
     height: 50%;
-    background-color: blanchedalmond;
+    background-color: greenyellow;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .foods-eaten-div {
-    
+    width: 40%;
+    height: 300px;
+    /* background-color: brown; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.foods-list {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 20px;
+}
+
+.foods-list-meal {
+    width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.span-calories {
+    color: red;
+}
+
+.span-proteins {
+    color: orange;
+}
+
+.span-carbohydrates {
+    color: lightblue;
+}
+
+.span-fats {
+    color: lightgreen;
 }
