@@ -1,47 +1,77 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MasterService } from '../../services/master.service';
-import { DailyNutrient } from '../../models/types';
 import { FormsModule } from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { LoadingComponent } from '../loading/loading.component';
-import { Subscription } from 'rxjs';
+import { ErrorComponent } from '../error/error.component';
+import { DailyNutrient, UserAllData, UserDailyStats } from '../../models/types';
 
 @Component({
   selector: 'app-daily-macros',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, LoadingComponent],
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    LoadingComponent,
+    ErrorComponent,
+    MatProgressBarModule,
+  ],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',
 })
 export class DailyMacrosComponent implements OnInit {
   token = '';
   loading = true;
+  isError = false;
   disableButton = true;
   currentDate = new Date().toISOString().substring(0, 10).toString();
   currentDateFormatted = this.currentDate.split('-').reverse().join('.');
-  allData: DailyNutrient[] = [];
-  emptyUserData: DailyNutrient = {
-    _id: '',
-    addedDate: '',
-    dailyCalories: 0,
-    dailyProteins: 0,
-    dailyCarbohydrates: 0,
-    dailyFats: 0,
-    mealsList: [],
-  };
-  userData: DailyNutrient = {
-    _id: '',
-    addedDate: '',
-    dailyCalories: 0,
-    dailyProteins: 0,
-    dailyCarbohydrates: 0,
-    dailyFats: 0,
-    mealsList: [],
-  };
   findDate = new Date().toLocaleDateString();
+
+  userData: UserDailyStats = {
+    goalCalories: 0,
+    goalProteins: 0,
+    goalCarbohydrates: 0,
+    goalFats: 0,
+    dailyNutrients: {
+      _id: '',
+      addedDate: '',
+      dailyCalories: 0,
+      dailyProteins: 0,
+      dailyCarbohydrates: 0,
+      dailyFats: 0,
+      mealsList: [],
+    },
+  };
+  allData: UserAllData = {
+    goalCalories: 0,
+    goalProteins: 0,
+    goalCarbohydrates: 0,
+    goalFats: 0,
+    dailyNutrients: [],
+  };
+
+  emptyUserData: UserDailyStats = {
+    goalCalories: 0,
+    goalProteins: 0,
+    goalCarbohydrates: 0,
+    goalFats: 0,
+    dailyNutrients: {
+      _id: '',
+      addedDate: '',
+      dailyCalories: 0,
+      dailyProteins: 0,
+      dailyCarbohydrates: 0,
+      dailyFats: 0,
+      mealsList: [],
+    },
+  };
+
   constructor(private service: MasterService) {}
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
@@ -51,20 +81,28 @@ export class DailyMacrosComponent implements OnInit {
         next: ({ data, loading }: any) => {
           this.loading = loading;
           if (!loading && typeof data === 'object') {
-            this.allData = data.getUser.dailyNutrients;
+            this.allData = data.getUser;
             const todayData = data.getUser.dailyNutrients.find(
-              (item: any) => item.addedDate === this.findDate
+              (item: DailyNutrient) => item.addedDate === this.findDate
             );
             if (todayData) {
-              this.userData = todayData;
-              console.log(todayData)
+              this.userData = {
+                ...data.getUser,
+                dailyNutrients: todayData
+              };
             } else {
               console.log('add food first');
+              this.userData = this.emptyUserData;
+              this.emptyUserData.dailyNutrients.addedDate = this.findDate
+                .split('-')
+                .reverse()
+                .join('.');
             }
           }
         },
         error: (error) => {
           console.log(error);
+          this.isError = true;
         },
       });
     } else {
@@ -73,20 +111,15 @@ export class DailyMacrosComponent implements OnInit {
   }
 
   onClick() {
-    const foundData = this.allData.find(
+    const foundData = this.allData.dailyNutrients.find(
       (item: any) =>
         item.addedDate === this.findDate.split('-').reverse().join('.')
     );
     if (foundData) {
-      this.userData = foundData;
-      if (this.findDate >= new Date().toLocaleDateString()) {
-        this.disableButton = true;
-      } else {
-        this.disableButton = false;
-      }
+      this.userData = { ...this.allData, dailyNutrients: foundData };
     } else {
       this.userData = this.emptyUserData;
-      this.emptyUserData.addedDate = this.findDate
+      this.emptyUserData.dailyNutrients.addedDate = this.findDate
         .split('-')
         .reverse()
         .join('.');

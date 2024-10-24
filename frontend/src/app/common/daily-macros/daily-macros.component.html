@@ -1,48 +1,58 @@
 <div class="main-div">
-  <div class="buttons-div">
-    <div>
-      <input type="date" [max]="currentDate" [(ngModel)]="findDate" />
-      <button (click)="onClick()">Click</button>
+  @if (isError) {
+    <app-error></app-error>
+  }
+  @else {
+    <div class="buttons-div">
+      <div>
+        <input type="date" [max]="currentDate" [(ngModel)]="findDate" />
+        <button (click)="onClick()">Click</button>
+      </div>
+  
+      <p>{{ userData.dailyNutrients.addedDate }}</p>
+      <p>Meals list</p>
     </div>
-
-    <p>{{ userData.addedDate || currentDateFormatted }}</p>
-    <p>Meals list</p>
-  </div>
-  <div class="holder-div">
-    <div class="macro-cards-div">
-      <div class="calories-card">
-        <p>calories</p>
-        <p>{{ userData.dailyCalories }}</p>
-      </div>
-      <div class="proteins-card">
-        <p>proteins</p>
-        <p>{{ userData.dailyProteins }}</p>
-      </div>
-      <div class="carbs-card">
-        <p>carbs</p>
-        <p>{{ userData.dailyCarbohydrates }}</p>
-      </div>
-      <div class="fats-card">
-        <p>fats</p>
-        <p>{{ userData.dailyFats }}</p>
-      </div>
-    </div>
-    <div class="foods-eaten-div">
-      <div class="foods-list">
-        @for (meal of userData.mealsList; track meal._id) {
-        <div class="foods-list-meal">
-          <p>{{ meal.foodEaten.name }}</p>
-          <div>
-            <span class="span-calories">C: {{ meal.caloriesCount }} </span>
-            <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
-            <span class="span-carbohydrates"
-              >C: {{ meal.carbohydratesCount }}
-            </span>
-            <span class="span-fats">F: {{ meal.fatsCount }}</span>
-          </div>
+    <div class="holder-div">
+      <div class="macro-cards-div">
+        <div class="calories-card">
+          <p>calories</p>
+          <p>{{ userData.goalCalories - userData.dailyNutrients.dailyCalories }}</p>
+          <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
+          <progress [max]="userData.goalCalories" [value]="userData.dailyNutrients.dailyCalories"></progress>
         </div>
-        }
+        <div class="proteins-card">
+          <p>proteins</p>
+          <p>{{ userData.goalProteins - userData.dailyNutrients.dailyProteins }}</p>
+          <progress [max]="userData.goalProteins" [value]="userData.dailyNutrients.dailyProteins"></progress>
+        </div>
+        <div class="carbs-card">
+          <p>carbs</p>
+          <p>{{ userData.goalCarbohydrates - userData.dailyNutrients.dailyCarbohydrates }}</p>
+          <progress [max]="userData.goalCarbohydrates" [value]="userData.dailyNutrients.dailyCarbohydrates"></progress>
+        </div>
+        <div class="fats-card">
+          <p>fats</p>
+          <p>{{ userData.goalFats - userData.dailyNutrients.dailyFats }}</p>
+          <progress [max]="userData.goalFats" [value]="userData.dailyNutrients.dailyFats"></progress>
+        </div>
+      </div>
+      <div class="foods-eaten-div">
+        <div class="foods-list">
+          @for (meal of userData.dailyNutrients.mealsList; track meal._id) {
+          <div class="foods-list-meal">
+            <p>{{ meal.foodEaten.name }}</p>
+            <div>
+              <span class="span-calories">C: {{ meal.caloriesCount }} </span>
+              <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
+              <span class="span-carbohydrates"
+                >C: {{ meal.carbohydratesCount }}
+              </span>
+              <span class="span-fats">F: {{ meal.fatsCount }}</span>
+            </div>
+          </div>
+          }
+        </div>
       </div>
     </div>
-  </div>
+  }
 </div>

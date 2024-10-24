@@ -22,6 +22,10 @@ export const GET_USER_DAILY_NUTRIENTS = gql`
           }
         }
       }
+      goalCalories
+      goalProteins
+      goalCarbohydrates
+      goalFats
     }
   }
 `;

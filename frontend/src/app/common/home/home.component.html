@@ -1,12 +1,14 @@
 <div class="main-div">
   @if (loading) {
-    <div class="loading-div">
-      <app-loading></app-loading>
-    </div>
+  <div class="loading-div">
+    <app-loading></app-loading>
+  </div>
+  } 
+  @else if (isError) {
+    <app-error></app-error>
   }
   @else {
-    <app-nav></app-nav>
-    <app-daily-macros></app-daily-macros>
-    <app-daily-macros></app-daily-macros>
+  <app-nav></app-nav>
+  <app-daily-macros></app-daily-macros>
   }
 </div>

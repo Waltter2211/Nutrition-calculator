@@ -6,6 +6,22 @@ export interface User {
   dailyNutrients: DailyNutrient[];
 }
 
+export interface UserDailyStats {
+  goalCalories: number;
+  goalProteins: number;
+  goalCarbohydrates: number;
+  goalFats: number;
+  dailyNutrients: DailyNutrient;
+}
+
+export interface UserAllData {
+  goalCalories: number;
+  goalProteins: number;
+  goalCarbohydrates: number;
+  goalFats: number;
+  dailyNutrients: DailyNutrient[];
+}
+
 export type DailyNutrient = {
   _id: string;
   addedDate: string;

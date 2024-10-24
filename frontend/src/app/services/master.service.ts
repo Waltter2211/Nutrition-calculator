@@ -39,7 +39,6 @@ export class MasterService {
       variables: {
         token: input,
       },
-      pollInterval: 500,
     });
   }
 
@@ -49,7 +48,6 @@ export class MasterService {
       variables: {
         token: input,
       },
-      pollInterval: 500,
     });
   }
 }

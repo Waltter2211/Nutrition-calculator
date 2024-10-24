@@ -51,6 +51,10 @@ export const typeDefs = `#graphql
         email: String!
         password: String!
         dailyNutrients: [NutrientCard]!
+        goalCalories: Int!
+        goalProteins: Int!
+        goalCarbohydrates: Int!
+        goalFats: Int!
     }
 
     "User input for creating user type"

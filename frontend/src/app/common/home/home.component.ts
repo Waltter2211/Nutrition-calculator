@@ -5,17 +5,19 @@ import { NavComponent } from '../nav/nav.component';
 import { MasterService } from '../../services/master.service';
 import { DailyMacrosComponent } from '../daily-macros/daily-macros.component';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, DailyMacrosComponent, LoadingComponent],
+  imports: [CommonModule, NavComponent, DailyMacrosComponent, LoadingComponent, ErrorComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   token = '';
   loading = true;
+  isError = false;
   userData: any = {
     _id: '',
     username: '',
@@ -39,6 +41,7 @@ export class HomeComponent implements OnInit {
         },
         error: (error) => {
           console.log(error);
+          this.isError = true;
         },
       });
     } else {
