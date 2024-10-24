@@ -19,7 +19,6 @@ import { DailyNutrient, UserAllData, UserDailyStats } from '../../models/types';
     MatDatepickerModule,
     LoadingComponent,
     ErrorComponent,
-    MatProgressBarModule,
   ],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',

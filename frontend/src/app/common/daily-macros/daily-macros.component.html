@@ -1,78 +1,109 @@
 <div class="main-div">
   @if (isError) {
-    <app-error></app-error>
-  }
-  @else {
-    <div class="buttons-div">
-      <div>
-        <input type="date" [max]="currentDate" [(ngModel)]="findDate" />
-        <button (click)="onClick()">Click</button>
-      </div>
-  
-      <p>{{ userData.dailyNutrients.addedDate }}</p>
-      <p>Meals list</p>
+  <app-error></app-error>
+  } @else {
+  <div class="buttons-div">
+    <div>
+      <input type="date" [max]="currentDate" [(ngModel)]="findDate" />
+      <button (click)="onClick()">Click</button>
     </div>
-    <div class="holder-div">
-      <div class="macro-cards-div">
-        <div class="calories-card">
-          <p>calories</p>
-          @if (userData.dailyNutrients.dailyCalories > userData.goalCalories) {
-            <p>Daily goal reached</p>
-          }
-          @else {
-            <p>{{ userData.goalCalories - userData.dailyNutrients.dailyCalories }} remaining from daily goal</p>
-            <progress [max]="userData.goalCalories" [value]="userData.dailyNutrients.dailyCalories"></progress>
-          }
-          <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
-        </div>
-        <div class="proteins-card">
-          <p>proteins</p>
-          @if (userData.dailyNutrients.dailyProteins > userData.goalProteins) {
-            <p>Daily goal reached</p>
-          }
-          @else {
-            <p>{{ userData.goalProteins - userData.dailyNutrients.dailyProteins }} remaining from daily goal</p>
-            <progress [max]="userData.goalProteins" [value]="userData.dailyNutrients.dailyProteins"></progress>
-          }
-        </div>
-        <div class="carbs-card">
-          <p>carbs</p>
-          @if (userData.dailyNutrients.dailyCarbohydrates > userData.goalCarbohydrates) {
-            <p>Daily goal reached</p>
-          }
-          @else {
-            <p>{{ userData.goalCarbohydrates - userData.dailyNutrients.dailyCarbohydrates }} remaining from daily goal</p>
-            <progress [max]="userData.goalCarbohydrates" [value]="userData.dailyNutrients.dailyCarbohydrates"></progress>
-          }
-        </div>
-        <div class="fats-card">
-          <p>fats</p>
-          @if (userData.dailyNutrients.dailyFats > userData.goalFats) {
-            <p>Daily goal reached</p>
-          }
-          @else {
-            <p>{{ userData.goalFats - userData.dailyNutrients.dailyFats }} remaining from daily goal</p>
-            <progress [max]="userData.goalFats" [value]="userData.dailyNutrients.dailyFats"></progress>
-          }
-        </div>
+
+    <p>{{ userData.dailyNutrients.addedDate }}</p>
+    <p>Meals list</p>
+  </div>
+  <div class="holder-div">
+    <div class="macro-cards-div">
+      <div class="calories-card">
+        <p>calories</p>
+        @if (userData.dailyNutrients.dailyCalories > userData.goalCalories) {
+        <p>Daily goal reached</p>
+        } @else {
+        <p>
+          {{
+            userData.goalCalories - userData.dailyNutrients.dailyCalories
+          }}
+          remaining from daily goal
+        </p>
+        <progress
+          [max]="userData.goalCalories"
+          [value]="userData.dailyNutrients.dailyCalories"
+        ></progress>
+        }
       </div>
-      <div class="foods-eaten-div">
-        <div class="foods-list">
-          @for (meal of userData.dailyNutrients.mealsList; track meal._id) {
-          <div class="foods-list-meal">
-            <p>{{ meal.foodEaten.name }}</p>
-            <div>
-              <span class="span-calories">C: {{ meal.caloriesCount }} </span>
-              <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
-              <span class="span-carbohydrates"
-                >C: {{ meal.carbohydratesCount }}
-              </span>
-              <span class="span-fats">F: {{ meal.fatsCount }}</span>
-            </div>
+      <div class="proteins-card">
+        <p>proteins</p>
+        @if (userData.dailyNutrients.dailyProteins > userData.goalProteins) {
+        <p>Daily goal reached</p>
+        } @else {
+        <p>
+          {{
+            userData.goalProteins - userData.dailyNutrients.dailyProteins
+          }}
+          remaining from daily goal
+        </p>
+        <progress
+          [max]="userData.goalProteins"
+          [value]="userData.dailyNutrients.dailyProteins"
+        ></progress>
+        }
+      </div>
+      <div class="carbs-card">
+        <p>carbs</p>
+        @if (userData.dailyNutrients.dailyCarbohydrates >
+        userData.goalCarbohydrates) {
+        <p>Daily goal reached</p>
+        } @else {
+        <p>
+          {{
+            userData.goalCarbohydrates -
+              userData.dailyNutrients.dailyCarbohydrates
+          }}
+          remaining from daily goal
+        </p>
+        <progress
+          [max]="userData.goalCarbohydrates"
+          [value]="userData.dailyNutrients.dailyCarbohydrates"
+        ></progress>
+        }
+      </div>
+      <div class="fats-card">
+        <p>fats</p>
+        @if (userData.dailyNutrients.dailyFats > userData.goalFats) {
+        <p>Daily goal reached</p>
+        } @else {
+        <p>
+          {{ userData.goalFats - userData.dailyNutrients.dailyFats }} remaining
+          from daily goal
+        </p>
+        <progress
+          [max]="userData.goalFats"
+          [value]="userData.dailyNutrients.dailyFats"
+        ></progress>
+        }
+      </div>
+    </div>
+    <div class="foods-eaten-div">
+      <div class="foods-list">
+        @if (userData.dailyNutrients.mealsList.length > 0) { @for (meal of
+        userData.dailyNutrients.mealsList; track meal._id) {
+        <div class="foods-list-meal">
+          <p>{{ meal.foodEaten.name }}</p>
+          <div>
+            <span class="span-calories">C: {{ meal.caloriesCount }} </span>
+            <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
+            <span class="span-carbohydrates"
+              >C: {{ meal.carbohydratesCount }}
+            </span>
+            <span class="span-fats">F: {{ meal.fatsCount }}</span>
           </div>
-          }
         </div>
+        } } @else {
+        <div class="empty-foods-list">
+          <p>No meals added</p>
+        </div>
+        }
       </div>
     </div>
+  </div>
   }
 </div>

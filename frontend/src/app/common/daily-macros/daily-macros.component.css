@@ -136,3 +136,9 @@
 .span-fats {
     color: lightgreen;
 }
+
+.empty-foods-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
