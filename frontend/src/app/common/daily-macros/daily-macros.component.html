@@ -16,24 +16,44 @@
       <div class="macro-cards-div">
         <div class="calories-card">
           <p>calories</p>
-          <p>{{ userData.goalCalories - userData.dailyNutrients.dailyCalories }}</p>
+          @if (userData.dailyNutrients.dailyCalories > userData.goalCalories) {
+            <p>Daily goal reached</p>
+          }
+          @else {
+            <p>{{ userData.goalCalories - userData.dailyNutrients.dailyCalories }} remaining from daily goal</p>
+            <progress [max]="userData.goalCalories" [value]="userData.dailyNutrients.dailyCalories"></progress>
+          }
           <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
-          <progress [max]="userData.goalCalories" [value]="userData.dailyNutrients.dailyCalories"></progress>
         </div>
         <div class="proteins-card">
           <p>proteins</p>
-          <p>{{ userData.goalProteins - userData.dailyNutrients.dailyProteins }}</p>
-          <progress [max]="userData.goalProteins" [value]="userData.dailyNutrients.dailyProteins"></progress>
+          @if (userData.dailyNutrients.dailyProteins > userData.goalProteins) {
+            <p>Daily goal reached</p>
+          }
+          @else {
+            <p>{{ userData.goalProteins - userData.dailyNutrients.dailyProteins }} remaining from daily goal</p>
+            <progress [max]="userData.goalProteins" [value]="userData.dailyNutrients.dailyProteins"></progress>
+          }
         </div>
         <div class="carbs-card">
           <p>carbs</p>
-          <p>{{ userData.goalCarbohydrates - userData.dailyNutrients.dailyCarbohydrates }}</p>
-          <progress [max]="userData.goalCarbohydrates" [value]="userData.dailyNutrients.dailyCarbohydrates"></progress>
+          @if (userData.dailyNutrients.dailyCarbohydrates > userData.goalCarbohydrates) {
+            <p>Daily goal reached</p>
+          }
+          @else {
+            <p>{{ userData.goalCarbohydrates - userData.dailyNutrients.dailyCarbohydrates }} remaining from daily goal</p>
+            <progress [max]="userData.goalCarbohydrates" [value]="userData.dailyNutrients.dailyCarbohydrates"></progress>
+          }
         </div>
         <div class="fats-card">
           <p>fats</p>
-          <p>{{ userData.goalFats - userData.dailyNutrients.dailyFats }}</p>
-          <progress [max]="userData.goalFats" [value]="userData.dailyNutrients.dailyFats"></progress>
+          @if (userData.dailyNutrients.dailyFats > userData.goalFats) {
+            <p>Daily goal reached</p>
+          }
+          @else {
+            <p>{{ userData.goalFats - userData.dailyNutrients.dailyFats }} remaining from daily goal</p>
+            <progress [max]="userData.goalFats" [value]="userData.dailyNutrients.dailyFats"></progress>
+          }
         </div>
       </div>
       <div class="foods-eaten-div">
