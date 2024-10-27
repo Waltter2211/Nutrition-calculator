@@ -6,6 +6,7 @@ import { MasterService } from '../../services/master.service';
 import { DailyMacrosComponent } from '../daily-macros/daily-macros.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { ErrorComponent } from '../error/error.component';
+import { FoodsComponent } from '../foods/foods.component';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { ErrorComponent } from '../error/error.component';
     DailyMacrosComponent,
     LoadingComponent,
     ErrorComponent,
+    FoodsComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

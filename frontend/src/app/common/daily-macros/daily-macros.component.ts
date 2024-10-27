@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import {RoundProgressComponent} from 'angular-svg-round-progressbar';
 
 @Component({
   selector: 'app-daily-macros',
@@ -24,7 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
     ErrorComponent,
     MatCardModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    RoundProgressComponent
   ],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',
@@ -144,10 +146,7 @@ export class DailyMacrosComponent implements OnInit {
     };
     this.service.deleteMealFromUser(inputObj).subscribe({
       next: ({ data, loading }) => {
-        console.log('deleted', data);
-        console.log('userdata', this.userData);
-        console.log('alldata', this.allData);
-        this.showSuccess(mealName)
+        this.showSuccess(mealName);
       },
       error: (error) => {
         this.isError = true;
@@ -159,7 +158,7 @@ export class DailyMacrosComponent implements OnInit {
   showSuccess(mealName: string) {
     this.toastr.success(`${mealName} deleted.`, 'Success', {
       closeButton: true,
-      progressBar: true
-    })
+      progressBar: true,
+    });
   }
 }

@@ -1,0 +1,7 @@
+p {
+  font-family: Lato;
+}
+.progress-bar {
+  height: 1rem;
+  background-color: blue;
+}
