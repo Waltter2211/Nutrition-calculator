@@ -15,7 +15,7 @@
     <div class="macro-cards-div">
       <div class="calories-card">
         <p>calories</p>
-        @if (userData.dailyNutrients.dailyCalories > userData.goalCalories) {
+        @if (userData.dailyNutrients.dailyCalories >= userData.goalCalories) {
         <p>Daily goal reached</p>
         } @else {
         <p>
@@ -35,7 +35,7 @@
       </div>
       <div class="proteins-card">
         <p>proteins</p>
-        @if (userData.dailyNutrients.dailyProteins > userData.goalProteins) {
+        @if (userData.dailyNutrients.dailyProteins >= userData.goalProteins) {
         <p>Daily goal reached</p>
         } @else {
         <p>
@@ -52,7 +52,7 @@
       </div>
       <div class="carbs-card">
         <p>carbs</p>
-        @if (userData.dailyNutrients.dailyCarbohydrates >
+        @if (userData.dailyNutrients.dailyCarbohydrates >=
         userData.goalCarbohydrates) {
         <p>Daily goal reached</p>
         } @else {
@@ -71,7 +71,7 @@
       </div>
       <div class="fats-card">
         <p>fats</p>
-        @if (userData.dailyNutrients.dailyFats > userData.goalFats) {
+        @if (userData.dailyNutrients.dailyFats >= userData.goalFats) {
         <p>Daily goal reached</p>
         } @else {
         <p>
@@ -99,7 +99,7 @@
             </span>
             <span class="span-fats">F: {{ meal.fatsCount }}</span>
           </div>
-          <button (click)="onDelete(meal._id)">Delete</button>
+          <button (click)="onDelete(meal._id, meal.foodEaten.name)">Delete</button>
         </div>
         } } @else {
         <div class="empty-foods-list">

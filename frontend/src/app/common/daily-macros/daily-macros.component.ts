@@ -3,11 +3,12 @@ import { MasterService } from '../../services/master.service';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { LoadingComponent } from '../loading/loading.component';
 import { ErrorComponent } from '../error/error.component';
 import { DailyNutrient, UserAllData, UserDailyStats } from '../../models/types';
+import { ToastrService } from 'ngx-toastr';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-daily-macros',
@@ -19,6 +20,7 @@ import { DailyNutrient, UserAllData, UserDailyStats } from '../../models/types';
     MatDatepickerModule,
     LoadingComponent,
     ErrorComponent,
+    MatCardModule,
   ],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',
@@ -71,7 +73,7 @@ export class DailyMacrosComponent implements OnInit {
     },
   };
 
-  constructor(private service: MasterService) {}
+  constructor(private service: MasterService, private toastr: ToastrService) {}
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
     if (foundToken) {
@@ -131,7 +133,7 @@ export class DailyMacrosComponent implements OnInit {
     }
   }
 
-  onDelete(mealId: string) {
+  onDelete(mealId: string, mealName: string) {
     const inputObj = {
       token: this.token,
       mealId: mealId,
@@ -141,11 +143,19 @@ export class DailyMacrosComponent implements OnInit {
         console.log('deleted', data);
         console.log('userdata', this.userData);
         console.log('alldata', this.allData);
+        this.showSuccess(mealName)
       },
       error: (error) => {
         this.isError = true;
         console.log(error);
       },
     });
+  }
+
+  showSuccess(mealName: string) {
+    this.toastr.success(`${mealName} deleted.`, 'Success', {
+      closeButton: true,
+      progressBar: true
+    })
   }
 }
