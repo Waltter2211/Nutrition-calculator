@@ -14,17 +14,22 @@
   <div class="holder-div">
     <div class="macro-cards-div">
       <div class="calories-card">
-        <p>calories</p>
         @if (userData.dailyNutrients.dailyCalories >= userData.goalCalories) {
         <p>Daily goal reached</p>
+        <p>
+          {{
+            (userData.goalCalories - userData.dailyNutrients.dailyCalories) *
+              -1
+          }}kcal of calories over daily goal
+        </p>
         } @else {
         <p>
           {{
             userData.goalCalories - userData.dailyNutrients.dailyCalories
-          }}
-          remaining from daily goal
+          }}kcal remaining from daily goal
         </p>
-        <progress class="progress-test"
+        <progress
+          class="progress-test"
           [max]="userData.goalCalories"
           [value]="userData.dailyNutrients.dailyCalories"
         ></progress>
@@ -34,51 +39,65 @@
         }
       </div>
       <div class="proteins-card">
-        <p>proteins</p>
         @if (userData.dailyNutrients.dailyProteins >= userData.goalProteins) {
         <p>Daily goal reached</p>
-        } @else {
         <p>
           {{
-            userData.goalProteins - userData.dailyNutrients.dailyProteins
-          }}
-          remaining from daily goal
+            (userData.goalProteins - userData.dailyNutrients.dailyProteins) *
+              -1
+          }}g of proteins over daily goal
         </p>
-        <progress class="progress-test"
+        } @else {
+        <p>
+          {{ userData.goalProteins - userData.dailyNutrients.dailyProteins }}g
+          of proteins remaining from daily goal
+        </p>
+        <progress
+          class="progress-test"
           [max]="userData.goalProteins"
           [value]="userData.dailyNutrients.dailyProteins"
         ></progress>
         }
       </div>
       <div class="carbs-card">
-        <p>carbs</p>
         @if (userData.dailyNutrients.dailyCarbohydrates >=
         userData.goalCarbohydrates) {
         <p>Daily goal reached</p>
+        <p>
+          {{
+            (userData.goalCarbohydrates -
+              userData.dailyNutrients.dailyCarbohydrates) *
+              -1
+          }}g of carbohydrates over daily goal
+        </p>
         } @else {
         <p>
           {{
             userData.goalCarbohydrates -
               userData.dailyNutrients.dailyCarbohydrates
-          }}
-          remaining from daily goal
+          }}g of carbohydrates remaining from daily goal
         </p>
-        <progress class="progress-test"
+        <progress
+          class="progress-test"
           [max]="userData.goalCarbohydrates"
           [value]="userData.dailyNutrients.dailyCarbohydrates"
         ></progress>
         }
       </div>
       <div class="fats-card">
-        <p>fats</p>
         @if (userData.dailyNutrients.dailyFats >= userData.goalFats) {
         <p>Daily goal reached</p>
+        <p>
+          {{ (userData.goalFats - userData.dailyNutrients.dailyFats) * -1 }}g of
+          fats over daily goal
+        </p>
         } @else {
         <p>
-          {{ userData.goalFats - userData.dailyNutrients.dailyFats }} remaining
+          {{ userData.goalFats - userData.dailyNutrients.dailyFats }}g of fats remaining
           from daily goal
         </p>
-        <progress class="progress-test"
+        <progress
+          class="progress-test"
           [max]="userData.goalFats"
           [value]="userData.dailyNutrients.dailyFats"
         ></progress>
@@ -90,16 +109,25 @@
         @if (userData.dailyNutrients.mealsList.length > 0) { @for (meal of
         userData.dailyNutrients.mealsList; track meal._id) {
         <div class="foods-list-meal">
-          <p>{{ meal.foodEaten.name }}</p>
-          <div>
-            <span class="span-calories">C: {{ meal.caloriesCount }} </span>
-            <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
-            <span class="span-carbohydrates"
-              >C: {{ meal.carbohydratesCount }}
-            </span>
-            <span class="span-fats">F: {{ meal.fatsCount }}</span>
+          <div class="foods-list-meal-holder">
+            <p>{{ meal.foodEaten.name }}</p>
+            <div>
+              <span class="span-calories">C: {{ meal.caloriesCount }} </span>
+              <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
+              <span class="span-carbohydrates"
+                >C: {{ meal.carbohydratesCount }}
+              </span>
+              <span class="span-fats">F: {{ meal.fatsCount }}</span>
+            </div>
           </div>
-          <button (click)="onDelete(meal._id, meal.foodEaten.name)">Delete</button>
+          <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with share icon"
+            (click)="onDelete(meal._id, meal.foodEaten.name)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
         } } @else {
         <div class="empty-foods-list">

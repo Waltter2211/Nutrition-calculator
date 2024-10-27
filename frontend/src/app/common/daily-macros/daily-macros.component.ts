@@ -9,6 +9,8 @@ import { ErrorComponent } from '../error/error.component';
 import { DailyNutrient, UserAllData, UserDailyStats } from '../../models/types';
 import { ToastrService } from 'ngx-toastr';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-daily-macros',
@@ -21,6 +23,8 @@ import { MatCardModule } from '@angular/material/card';
     LoadingComponent,
     ErrorComponent,
     MatCardModule,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',
