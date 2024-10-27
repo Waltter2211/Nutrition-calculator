@@ -142,3 +142,8 @@
     display: flex;
     justify-content: center;
 }
+
+.progress-test {
+    width: 100%;
+    height: 60px;
+}

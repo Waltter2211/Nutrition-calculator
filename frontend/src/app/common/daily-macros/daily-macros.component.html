@@ -24,10 +24,13 @@
           }}
           remaining from daily goal
         </p>
-        <progress
+        <progress class="progress-test"
           [max]="userData.goalCalories"
           [value]="userData.dailyNutrients.dailyCalories"
         ></progress>
+        <!-- <div class="progress-bar-edges">
+          <div class="progress-bar-inside"></div>
+        </div> -->
         }
       </div>
       <div class="proteins-card">
@@ -41,7 +44,7 @@
           }}
           remaining from daily goal
         </p>
-        <progress
+        <progress class="progress-test"
           [max]="userData.goalProteins"
           [value]="userData.dailyNutrients.dailyProteins"
         ></progress>
@@ -60,7 +63,7 @@
           }}
           remaining from daily goal
         </p>
-        <progress
+        <progress class="progress-test"
           [max]="userData.goalCarbohydrates"
           [value]="userData.dailyNutrients.dailyCarbohydrates"
         ></progress>
@@ -75,7 +78,7 @@
           {{ userData.goalFats - userData.dailyNutrients.dailyFats }} remaining
           from daily goal
         </p>
-        <progress
+        <progress class="progress-test"
           [max]="userData.goalFats"
           [value]="userData.dailyNutrients.dailyFats"
         ></progress>
@@ -96,6 +99,7 @@
             </span>
             <span class="span-fats">F: {{ meal.fatsCount }}</span>
           </div>
+          <button (click)="onDelete(meal._id)">Delete</button>
         </div>
         } } @else {
         <div class="empty-foods-list">

@@ -228,6 +228,10 @@ export type User = {
   _id?: Maybe<Scalars['ID']['output']>;
   dailyNutrients: Array<Maybe<NutrientCard>>;
   email: Scalars['String']['output'];
+  goalCalories: Scalars['Int']['output'];
+  goalCarbohydrates: Scalars['Int']['output'];
+  goalFats: Scalars['Int']['output'];
+  goalProteins: Scalars['Int']['output'];
   password: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -251,7 +255,7 @@ export type GetUserDailyNutrientsQueryVariables = Exact<{
 }>;
 
 
-export type GetUserDailyNutrientsQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', dailyNutrients: Array<{ __typename?: 'NutrientCard', _id: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, addedDate: string, mealsList: Array<{ __typename?: 'Meal', _id: string, caloriesCount: number, proteinsCount: number, carbohydratesCount: number, fatsCount: number, foodEaten: { __typename?: 'Food', _id: string, name: string } } | null> } | null> } | null };
+export type GetUserDailyNutrientsQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', goalCalories: number, goalProteins: number, goalCarbohydrates: number, goalFats: number, dailyNutrients: Array<{ __typename?: 'NutrientCard', _id: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, addedDate: string, mealsList: Array<{ __typename?: 'Meal', _id: string, caloriesCount: number, proteinsCount: number, carbohydratesCount: number, fatsCount: number, foodEaten: { __typename?: 'Food', _id: string, name: string } } | null> } | null> } | null };
 
 export type GetUserQueryVariables = Exact<{
   token: Scalars['String']['input'];
@@ -318,6 +322,10 @@ export const GetUserDailyNutrientsDocument = gql`
         }
       }
     }
+    goalCalories
+    goalProteins
+    goalCarbohydrates
+    goalFats
   }
 }
     `;

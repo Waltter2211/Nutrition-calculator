@@ -81,13 +81,19 @@ export class DailyMacrosComponent implements OnInit {
           this.loading = loading;
           if (!loading && typeof data === 'object') {
             this.allData = data.getUser;
+            this.emptyUserData.goalCalories = data.getUser.goalCalories;
+            this.emptyUserData.goalProteins = data.getUser.goalProteins;
+            this.emptyUserData.goalCarbohydrates =
+              data.getUser.goalCarbohydrates;
+            this.emptyUserData.goalFats = data.getUser.goalFats;
+            this.findDate = this.findDate.split('-').reverse().join('.');
             const todayData = data.getUser.dailyNutrients.find(
               (item: DailyNutrient) => item.addedDate === this.findDate
             );
             if (todayData) {
               this.userData = {
                 ...data.getUser,
-                dailyNutrients: todayData
+                dailyNutrients: todayData,
               };
             } else {
               console.log('add food first');
@@ -123,5 +129,23 @@ export class DailyMacrosComponent implements OnInit {
         .reverse()
         .join('.');
     }
+  }
+
+  onDelete(mealId: string) {
+    const inputObj = {
+      token: this.token,
+      mealId: mealId,
+    };
+    this.service.deleteMealFromUser(inputObj).subscribe({
+      next: ({ data, loading }) => {
+        console.log('deleted', data);
+        console.log('userdata', this.userData);
+        console.log('alldata', this.allData);
+      },
+      error: (error) => {
+        this.isError = true;
+        console.log(error);
+      },
+    });
   }
 }
