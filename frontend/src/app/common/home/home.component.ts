@@ -10,7 +10,13 @@ import { ErrorComponent } from '../error/error.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, DailyMacrosComponent, LoadingComponent, ErrorComponent],
+  imports: [
+    CommonModule,
+    NavComponent,
+    DailyMacrosComponent,
+    LoadingComponent,
+    ErrorComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
