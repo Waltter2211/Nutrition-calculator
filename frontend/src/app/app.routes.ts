@@ -5,6 +5,7 @@ import { LoginComponent } from './common/login/login.component';
 import { HomeComponent } from './common/home/home.component';
 import { NotfoundComponent } from './common/notfound/notfound.component';
 import { authGuard } from './guards/auth.guard';
+import { ErrorComponent } from './common/error/error.component';
 
 export const routes: Routes = [
   {

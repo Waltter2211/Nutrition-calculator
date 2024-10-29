@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.error-div {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-img-div {
+    width: 20%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.error-text-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+}
+
+.error-text-div > h1 {
+    font-size: 60px;
+    font-weight: 400;
+}
+
+.error-text-div > h3 {
+    font-size: 25px;
+    font-weight: 400;
+}

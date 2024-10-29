@@ -1,10 +1,1 @@
 <p>foods works!</p>
-
-<ng-container *ngIf="counter$ | async as progress">
-  <h1>Progress:</h1>
-  <h1>{{ dailyCalories }} / {{ calorieGoal }} {{ progress }}</h1>
-  <h3 *ngIf="progress === 100">Done!</h3>
-  <div class="progress-bar" [style.width.%]="progress"></div>
-</ng-container>
-
-<div id="draw-shapes"></div>

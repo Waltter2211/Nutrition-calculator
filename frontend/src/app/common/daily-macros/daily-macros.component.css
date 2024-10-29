@@ -102,6 +102,7 @@
 
 .progress-bar-text {
     position: absolute;
+    top: 70%;
 }
 
 .foods-eaten-div {
