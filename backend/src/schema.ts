@@ -7,9 +7,11 @@ export const typeDefs = `#graphql
         "Query for fetching single Meal"
         getMeal(mealId: String!): Meal
         "Query for fetching all foods"
-        getFoods: [Food]
+        getAllFoods: [Food]
         "Query for fetching single Food"
         getFood(foodId: String!): Food
+        "Query for fetching single or multiple Foods with name"
+        searchFoods(foodsName: String): [Food]!
     }
 
     type Mutation {

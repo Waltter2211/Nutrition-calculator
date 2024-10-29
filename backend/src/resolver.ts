@@ -15,49 +15,47 @@ export const resolvers = {
     hello: () => "Hello",
     // Resolver for fetching user with token and ID
     getUser: async (_: any, { token }: any) => {
-      // Try to verify token
       try {
-        // Check if token is valid
         const verifiedToken = jwtTokenVerifier(token);
         if (typeof verifiedToken === "object") {
-          // Return found user
           return await User.findById(verifiedToken.userId);
         } else {
           // Returns invalid user token on failure
           throw new Error("Invalid user token");
         }
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
     // Resolver for fetching all foods
-    getFoods: async () => {
-      // Try to fetch all foods
+    getAllFoods: async () => {
       try {
         return await Food.find({});
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
     // Resolver for fetching single food item with i'ts ID
     getFood: async (_: any, { foodId }: { foodId: string }) => {
-      // Try to fetch Food with food ID
       try {
         return await Food.findById(foodId);
       } catch (error) {
-        // Returns error on failure
+        return error;
+      }
+    },
+    // Resolver for fetching single or multiple foods with it's name
+    searchFoods: async (_: any, { foodsName }: { foodsName: string }) => {
+      try {
+        return await Food.find({ name: { $regex: foodsName } })   
+      } catch (error) {
         return error;
       }
     },
     // Resolver for fetching single meal with i'ts ID
     getMeal: async (_: any, { mealId }: { mealId: string }) => {
-      // Try to fetch Meal with meal ID
       try {
         return await Meal.findById(mealId);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -81,19 +79,16 @@ export const resolvers = {
               userId: foundUser._id,
               email: foundUser.email,
             };
-            // Sign jwt token and return object with user email and token
+
             const token = jwt.sign(loginObj, "jsontoken");
             return { token: token };
           } else {
-            // Returns error on wrong password
             throw new Error("Incorrect password");
           }
         } else {
-          // Returns error on wrong username
           throw new Error("No user matches this email");
         }
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -112,7 +107,6 @@ export const resolvers = {
         };
         return await User.create(userObj);
       } catch (error) {
-        // Returns error on failure
         throw new Error("Email in use");
         /* return error; */
       }
@@ -128,21 +122,18 @@ export const resolvers = {
           const foundUser = await User.findById(verifiedToken.userId);
           // If user is found with provided id
           if (foundUser) {
-            // Hash new password
             const hashedPass = await bcrypt.hash(input.password, 10);
             // Update user fields with new information
             foundUser.username = input.username;
             foundUser.email = input.email;
             foundUser.password = hashedPass;
-            // Update user with new user information to database
+
             return await User.updateOne({ _id: foundUser._id }, foundUser);
           }
         } else {
-          // Returns error on failure
           throw Error("Invalid token");
         }
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -150,7 +141,6 @@ export const resolvers = {
     deleteUser: async (_: any, { input }: any) => {
       // Try to delete user from database
       try {
-        // Try to verify users token
         const verifiedToken = jwtTokenVerifier(input.token);
         if (typeof verifiedToken === "object") {
           return await User.deleteOne({ _id: verifiedToken.userId });
@@ -158,7 +148,6 @@ export const resolvers = {
           throw Error("Invalid token");
         }
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -168,7 +157,6 @@ export const resolvers = {
       try {
         return await NutrientCard.deleteOne({ _id: input });
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -178,7 +166,6 @@ export const resolvers = {
       try {
         return await Food.deleteOne({ _id: input });
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -196,7 +183,6 @@ export const resolvers = {
       try {
         return await Food.create(foodObj);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -315,11 +301,9 @@ export const resolvers = {
             }
           }
         } else {
-          // Returns error on failure
           throw Error("Invalid token");
         }
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -370,11 +354,9 @@ export const resolvers = {
             throw new Error("No user found with ID");
           }
         } else {
-          // If token is invalid throw error
           throw Error("Invalid token");
         }
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -388,7 +370,6 @@ export const resolvers = {
       try {
         return await mapperHelperFunction(dailyNutrients, NutrientCard);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -402,7 +383,6 @@ export const resolvers = {
       try {
         return await User.findById(parent.user);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -412,7 +392,6 @@ export const resolvers = {
       try {
         return await mapperHelperFunction(parent.mealsList, Meal);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -426,7 +405,6 @@ export const resolvers = {
       try {
         return await Food.findById(parent.foodEaten);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -436,7 +414,6 @@ export const resolvers = {
       try {
         return await User.findById(parent.user);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },
@@ -447,7 +424,6 @@ export const resolvers = {
       try {
         return await NutrientCard.findById(parent.nutrientCard);
       } catch (error) {
-        // Returns error on failure
         return error;
       }
     },

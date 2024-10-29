@@ -178,16 +178,18 @@ export type NutrientCardInput = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Query for fetching all foods */
+  getAllFoods?: Maybe<Array<Maybe<Food>>>;
   /** Query for fetching single Food */
   getFood?: Maybe<Food>;
-  /** Query for fetching all foods */
-  getFoods?: Maybe<Array<Maybe<Food>>>;
   /** Query for fetching single Meal */
   getMeal?: Maybe<Meal>;
   /** Query for fetching user with token */
   getUser?: Maybe<User>;
   /** Test Query */
   hello?: Maybe<Scalars['String']['output']>;
+  /** Query for fetching single or multiple Foods with name */
+  searchFoods: Array<Maybe<Food>>;
 };
 
 
@@ -203,6 +205,11 @@ export type QueryGetMealArgs = {
 
 export type QueryGetUserArgs = {
   token: Scalars['String']['input'];
+};
+
+
+export type QuerySearchFoodsArgs = {
+  foodsName?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Update success type for successfully updating database */
@@ -236,6 +243,13 @@ export type User = {
   username: Scalars['String']['output'];
 };
 
+export type MutationMutationVariables = Exact<{
+  input: DeleteMealFromUserInput;
+}>;
+
+
+export type MutationMutation = { __typename?: 'Mutation', deleteMealFromUser?: { __typename?: 'UpdateSuccess', acknowledged?: boolean | null, matchedCount?: number | null, modifiedCount?: number | null, upsertedId?: string | null } | null };
+
 export type LoginUserMutationVariables = Exact<{
   input: LoginInput;
 }>;
@@ -249,6 +263,11 @@ export type AddUserMutationVariables = Exact<{
 
 
 export type AddUserMutation = { __typename?: 'Mutation', addUser?: { __typename?: 'User', username: string } | null };
+
+export type GetAllFoodsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllFoodsQuery = { __typename?: 'Query', getAllFoods?: Array<{ __typename?: 'Food', _id: string, name: string, calories: number, proteins: number, carbohydrates: number, fats: number } | null> | null };
 
 export type GetUserDailyNutrientsQueryVariables = Exact<{
   token: Scalars['String']['input'];
@@ -264,6 +283,34 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', _id?: string | null, username: string, email: string } | null };
 
+export type SearchFoodsQueryVariables = Exact<{
+  foodsName?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchFoodsQuery = { __typename?: 'Query', searchFoods: Array<{ __typename?: 'Food', _id: string, name: string, calories: number, proteins: number, carbohydrates: number, fats: number } | null> };
+
+export const MutationDocument = gql`
+    mutation Mutation($input: DeleteMealFromUserInput!) {
+  deleteMealFromUser(input: $input) {
+    acknowledged
+    matchedCount
+    modifiedCount
+    upsertedId
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class MutationGQL extends Apollo.Mutation<MutationMutation, MutationMutationVariables> {
+    document = MutationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const LoginUserDocument = gql`
     mutation LoginUser($input: LoginInput!) {
   loginUser(input: $input) {
@@ -295,6 +342,29 @@ export const AddUserDocument = gql`
   })
   export class AddUserGQL extends Apollo.Mutation<AddUserMutation, AddUserMutationVariables> {
     document = AddUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetAllFoodsDocument = gql`
+    query GetAllFoods {
+  getAllFoods {
+    _id
+    name
+    calories
+    proteins
+    carbohydrates
+    fats
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAllFoodsGQL extends Apollo.Query<GetAllFoodsQuery, GetAllFoodsQueryVariables> {
+    document = GetAllFoodsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -355,6 +425,29 @@ export const GetUserDocument = gql`
   })
   export class GetUserGQL extends Apollo.Query<GetUserQuery, GetUserQueryVariables> {
     document = GetUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SearchFoodsDocument = gql`
+    query SearchFoods($foodsName: String) {
+  searchFoods(foodsName: $foodsName) {
+    _id
+    name
+    calories
+    proteins
+    carbohydrates
+    fats
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SearchFoodsGQL extends Apollo.Query<SearchFoodsQuery, SearchFoodsQueryVariables> {
+    document = SearchFoodsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
