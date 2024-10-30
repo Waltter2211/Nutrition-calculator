@@ -57,6 +57,8 @@ export const typeDefs = `#graphql
         goalProteins: Int!
         goalCarbohydrates: Int!
         goalFats: Int!
+        goalWater: Int!
+        goalSteps: Int!
     }
 
     "User input for creating user type"
@@ -103,6 +105,7 @@ export const typeDefs = `#graphql
         user: User!
         nutrientCard: NutrientCard!
         foodEaten: Food!
+        gramsEaten: Int!
         caloriesCount: Int!
         proteinsCount: Int!
         carbohydratesCount: Int!
@@ -132,6 +135,7 @@ export const typeDefs = `#graphql
     input AddFoodToUserInput {
         token: String!
         foodId: String!
+        gramsEaten: Int!
         caloriesCount: Int!
         proteinsCount: Int!
         carbohydratesCount: Int!

@@ -20,12 +20,15 @@ export const GET_USER_DAILY_NUTRIENTS = gql`
             _id
             name
           }
+          gramsEaten
         }
       }
       goalCalories
       goalProteins
       goalCarbohydrates
       goalFats
+      goalWater
+      goalSteps
     }
   }
 `;

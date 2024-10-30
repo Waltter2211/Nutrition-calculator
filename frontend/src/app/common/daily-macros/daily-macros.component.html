@@ -1,7 +1,8 @@
 <div class="main-div">
   @if (isError) {
   <app-error></app-error>
-  } @else {
+  } 
+  @else {
   <div class="buttons-div">
     <div>
       <input type="date" [max]="currentDate" [(ngModel)]="findDate" />
@@ -22,7 +23,8 @@
               -1
           }}kcal of calories over daily goal
         </p>
-        } @else {
+        } 
+        @else {
           <p>Calories</p>
           <div class="progress-bar-div">
             <div class="progress-bar-text">{{ userData.dailyNutrients.dailyCalories }}/{{ userData.goalCalories }}kcal</div>
@@ -39,20 +41,21 @@
         }
       </div>
       <div class="macro-card">
-        @if (userData.dailyNutrients.dailyProteins >= userData.goalProteins) {
+        @if (userData.dailyNutrients.dailyCarbohydrates >= userData.goalCarbohydrates) {
         <p>Daily goal reached</p>
         <p>
           {{
-            (userData.goalProteins - userData.dailyNutrients.dailyProteins) *
+            (userData.goalCarbohydrates - userData.dailyNutrients.dailyCarbohydrates) *
               -1
-          }}g of proteins over daily goal
+          }}g of carbohydrates over daily goal
         </p>
-        } @else {
-          <p>Proteins</p>
+        } 
+        @else {
+          <p>Carbohydrates</p>
           <div class="progress-bar-div">
-            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyProteins }}/{{ userData.goalProteins }}g</div>
-            <round-progress [current]="userData.dailyNutrients.dailyProteins"
-            [max]="userData.goalProteins" [color]="'orange'"
+            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyCarbohydrates }}/{{ userData.goalCarbohydrates }}g</div>
+            <round-progress [current]="userData.dailyNutrients.dailyCarbohydrates"
+            [max]="userData.goalCarbohydrates" [color]="'lightblue'"
             [background]="'#eaeaea'" [radius]="100" [stroke]="20"
             [semicircle]="true" [rounded]="false" [clockwise]="true"
             [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"
@@ -71,12 +74,35 @@
               -1
           }}g of carbohydrates over daily goal
         </p>
-        } @else {
-          <p>Carbohydrates</p>
+        } 
+        @else {
+          <!-- TODO ADD WATER -->
+          <p>Water</p>
           <div class="progress-bar-div">
-            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyCarbohydrates }}/{{ userData.goalCarbohydrates }}g</div>
+            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyCarbohydrates }}/{{ userData.goalWater }}l</div>
             <round-progress [current]="userData.dailyNutrients.dailyCarbohydrates"
-            [max]="userData.goalCarbohydrates" [color]="'lightblue'"
+            [max]="userData.goalCarbohydrates" [color]="'aqua'"
+            [background]="'#eaeaea'" [radius]="100" [stroke]="20"
+            [semicircle]="true" [rounded]="false" [clockwise]="true"
+            [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"
+            [animationDelay]="0" />
+          </div>
+        }
+      </div>
+      <div class="macro-card">
+        @if (userData.dailyNutrients.dailyProteins >= userData.goalProteins) {
+        <p>Daily goal reached</p>
+        <p>
+          {{ (userData.goalProteins - userData.dailyNutrients.dailyProteins) * -1 }}g of
+          proteins over daily goal
+        </p>
+        } 
+        @else {
+          <p>Proteins</p>
+          <div class="progress-bar-div">
+            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyProteins }}/{{ userData.goalProteins }}g</div>
+            <round-progress [current]="userData.dailyNutrients.dailyProteins"
+            [max]="userData.goalProteins" [color]="'orange'"
             [background]="'#eaeaea'" [radius]="100" [stroke]="20"
             [semicircle]="true" [rounded]="false" [clockwise]="true"
             [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"
@@ -91,7 +117,8 @@
           {{ (userData.goalFats - userData.dailyNutrients.dailyFats) * -1 }}g of
           fats over daily goal
         </p>
-        } @else {
+        } 
+        @else {
           <p>Fats</p>
           <div class="progress-bar-div">
             <div class="progress-bar-text">{{ userData.dailyNutrients.dailyFats }}/{{ userData.goalFats }}g</div>
@@ -102,10 +129,28 @@
             [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"
             [animationDelay]="0" />
           </div>
-        <!-- <p>
-          {{ userData.goalFats - userData.dailyNutrients.dailyFats }}/{{ userData.goalFats }}g fats consumed
-        </p> -->
-        
+        }
+      </div>
+      <!-- TODO ADD STEPS -->
+      <div class="macro-card">
+        @if (userData.dailyNutrients.dailyFats >= userData.goalFats) {
+        <p>Daily goal reached</p>
+        <p>
+          {{ (userData.goalFats - userData.dailyNutrients.dailyFats) * -1 }}g of
+          fats over daily goal
+        </p>
+        } 
+        @else {
+          <p>Steps</p>
+          <div class="progress-bar-div">
+            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyFats }}/{{ userData.goalSteps }}steps</div>
+            <round-progress [current]="userData.dailyNutrients.dailyFats"
+            [max]="userData.goalFats" [color]="'brown'"
+            [background]="'#eaeaea'" [radius]="100" [stroke]="20"
+            [semicircle]="true" [rounded]="false" [clockwise]="true"
+            [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"
+            [animationDelay]="0" />
+          </div>
         }
       </div>
     </div>
@@ -116,6 +161,7 @@
         <div class="foods-list-meal">
           <div class="foods-list-meal-holder">
             <p>{{ meal.foodEaten.name }}</p>
+            <p>{{ meal.gramsEaten }} g</p>
             <div>
               <span class="span-calories">C: {{ meal.caloriesCount }} </span>
               <span class="span-proteins">P: {{ meal.proteinsCount }} </span>
@@ -134,7 +180,9 @@
             <mat-icon>delete</mat-icon>
           </button>
         </div>
-        } } @else {
+        } 
+      } 
+      @else {
         <div class="empty-foods-list">
           <p>No meals added</p>
         </div>

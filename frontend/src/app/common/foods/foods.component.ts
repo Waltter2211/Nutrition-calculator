@@ -18,6 +18,7 @@ export class FoodsComponent {
   foods: any;
   test = ''
   noFoods = false
+  selectedFood: any;
 
   onSearch(event: any) {
     if (event.target.value) {

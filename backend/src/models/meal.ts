@@ -18,6 +18,10 @@ const mealSchema = new mongoose.Schema(
       ref: "foods",
       required: true,
     },
+    gramsEaten: {
+      type: Number,
+      required: true,
+    },
     caloriesCount: {
       type: Number,
       required: true,

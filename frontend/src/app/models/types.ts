@@ -11,6 +11,8 @@ export interface UserDailyStats {
   goalProteins: number;
   goalCarbohydrates: number;
   goalFats: number;
+  goalWater: number;
+  goalSteps: number;
   dailyNutrients: DailyNutrient;
 }
 
@@ -19,6 +21,8 @@ export interface UserAllData {
   goalProteins: number;
   goalCarbohydrates: number;
   goalFats: number;
+  goalWater: number;
+  goalSteps: number;
   dailyNutrients: DailyNutrient[];
 }
 
@@ -39,6 +43,7 @@ type Meal = {
   carbohydratesCount: number;
   fatsCount: number;
   foodEaten: Food;
+  gramsEaten: number;
 };
 
 type Food = {
