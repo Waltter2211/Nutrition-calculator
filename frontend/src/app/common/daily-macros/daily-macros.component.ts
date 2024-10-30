@@ -89,25 +89,15 @@ export class DailyMacrosComponent implements OnInit {
 
   testObj: any
 
-  constructor(private service: MasterService, private toastr: ToastrService, private getUserDailyNutrientsService: GetUserDailyNutrientsGQL) {}
+  constructor(private service: MasterService, private toastr: ToastrService) {}
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
     if (foundToken) {
       this.token = foundToken;
-      /* this.getUserDailyNutrientsService.watch({token: this.token}).valueChanges.subscribe({
-        next: ({ data }) => {
-          this.testObj = data.getUser
-          console.log(this.testObj)
-        },
-        error: (error) => {
-          console.log(error)
-        }
-      }) */
       this.service.getUserDailyNutrients(this.token).valueChanges.subscribe({
         next: ({ data, loading }: any) => {
           this.loading = loading;
           if (!loading && typeof data === 'object') {
-            console.log(data.getUser)
             this.allData = data.getUser;
             this.emptyUserData.goalCalories = data.getUser.goalCalories;
             this.emptyUserData.goalProteins = data.getUser.goalProteins;
