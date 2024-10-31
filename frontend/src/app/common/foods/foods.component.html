@@ -1,29 +1,3 @@
 <div class="main-div">
-    <div class="search-holder-div">
-        <p>Search for foods</p>
-        <input type="text" (keyup)="onSearch($event)" />
-        <div class="search-items-list-div">
-          @if (loading) {
-          <p>loading</p>
-          } @else if (noFoods) {
-          <p>No foods found</p>
-          } @else { @for (food of foods; track food._id) {
-          <div>
-            <p>{{ food.name }}</p>
-            <p>{{ food.calories }}</p>
-            <p>{{ food.proteins }}</p>
-            <p>{{ food.carbohydrates }}</p>
-            <p>{{ food.fats }}</p>
-          </div>
-          } }
-        </div>
-    </div>
-    <div class="add-food-holder-div">
-        <div>
-            <div></div>
-        </div>
-        <div>
-            <div></div>
-        </div>
-    </div>
+    <button class="add-food-btn" (click)="openDialog()">+</button>
 </div>

@@ -1,59 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { MasterService } from '../../services/master.service';
 import { GetAllFoodsGQL, SearchFoodsGQL } from '../../../../graphql/generated';
 import { FormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { FoodsSearchComponent } from '../foods-search/foods-search.component';
 
 @Component({
   selector: 'app-foods',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [MatButtonModule, MatDialogModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './foods.component.html',
   styleUrl: './foods.component.css',
 })
 export class FoodsComponent {
-  constructor(private service: MasterService, private searchFoodsService: SearchFoodsGQL, private getAllFoods: GetAllFoodsGQL) {}
-  loading = false;
-  foods: any;
-  test = ''
-  noFoods = false
-  selectedFood: any;
+  readonly dialog = inject(MatDialog)
 
-  onSearch(event: any) {
-    if (event.target.value) {
-      const foodsName = event.target.value
-      this.searchFoodsService.fetch({ foodsName }).subscribe({
-        next: ({ data, loading }) => {
-          this.loading = true
-          if (!loading) {
-            this.noFoods = false
-            this.loading = loading
-            this.foods = data.searchFoods
-            if (this.foods.length === 0) {
-              this.noFoods = true
-            }
-          }
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    } else {
-      this.foods = []
-      /* this.getAllFoods.fetch().subscribe({
-        next: ({ data, loading }) => {
-          this.loading = true
-          if (!loading) {
-            this.loading = loading
-            console.log(data.getAllFoods)
-            this.foods = data.getAllFoods
-          }
-        },
-        error: (error) => {
-          console.log(error)
-        }
-      }) */
-    }
+  openDialog() {
+    const dialogRef = this.dialog.open(FoodsSearchComponent, { width: '60%', height: '600px' })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`dialog result ${result}`)
+    })
   }
 }

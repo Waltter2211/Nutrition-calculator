@@ -11,9 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {RoundProgressComponent} from 'angular-svg-round-progressbar';
-import { GetUserDailyNutrientsGQL, GetUserDailyNutrientsQuery } from '../../../../graphql/generated';
-import { map, tap } from 'rxjs';
+import { RoundProgressComponent } from 'angular-svg-round-progressbar';
 
 @Component({
   selector: 'app-daily-macros',
@@ -28,7 +26,7 @@ import { map, tap } from 'rxjs';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    RoundProgressComponent
+    RoundProgressComponent,
   ],
   templateUrl: './daily-macros.component.html',
   styleUrl: './daily-macros.component.css',
@@ -87,8 +85,6 @@ export class DailyMacrosComponent implements OnInit {
     },
   };
 
-  testObj: any
-
   constructor(private service: MasterService, private toastr: ToastrService) {}
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
@@ -96,34 +92,7 @@ export class DailyMacrosComponent implements OnInit {
       this.token = foundToken;
       this.service.getUserDailyNutrients(this.token).valueChanges.subscribe({
         next: ({ data, loading }: any) => {
-          this.loading = loading;
-          if (!loading && typeof data === 'object') {
-            this.allData = data.getUser;
-            this.emptyUserData.goalCalories = data.getUser.goalCalories;
-            this.emptyUserData.goalProteins = data.getUser.goalProteins;
-            this.emptyUserData.goalCarbohydrates =
-              data.getUser.goalCarbohydrates;
-            this.emptyUserData.goalFats = data.getUser.goalFats;
-            this.emptyUserData.goalWater = data.getUser.goalWater;
-            this.emptyUserData.goalSteps = data.getUser.goalSteps;
-            this.findDate = this.findDate.split('-').reverse().join('.');
-            const todayData = data.getUser.dailyNutrients.find(
-              (item: DailyNutrient) => item.addedDate === this.findDate
-            );
-            if (todayData) {
-              this.userData = {
-                ...data.getUser,
-                dailyNutrients: todayData,
-              };
-            } else {
-              console.log('add food first');
-              this.userData = this.emptyUserData;
-              this.emptyUserData.dailyNutrients.addedDate = this.findDate
-                .split('-')
-                .reverse()
-                .join('.');
-            }
-          }
+          this.fetchUserNutritionData(data, loading);
         },
         error: (error) => {
           console.log(error);
@@ -172,5 +141,35 @@ export class DailyMacrosComponent implements OnInit {
       closeButton: true,
       progressBar: true,
     });
+  }
+
+  fetchUserNutritionData(dataArr: any, loadingBool: boolean) {
+    this.loading = loadingBool;
+    if (!loadingBool && typeof dataArr === 'object') {
+      this.allData = dataArr.getUser;
+      this.emptyUserData.goalCalories = dataArr.getUser.goalCalories;
+      this.emptyUserData.goalProteins = dataArr.getUser.goalProteins;
+      this.emptyUserData.goalCarbohydrates = dataArr.getUser.goalCarbohydrates;
+      this.emptyUserData.goalFats = dataArr.getUser.goalFats;
+      this.emptyUserData.goalWater = dataArr.getUser.goalWater;
+      this.emptyUserData.goalSteps = dataArr.getUser.goalSteps;
+      this.findDate = this.findDate.split('-').reverse().join('.');
+      const todayData = dataArr.getUser.dailyNutrients.find(
+        (item: DailyNutrient) => item.addedDate === this.findDate
+      );
+      if (todayData) {
+        this.userData = {
+          ...dataArr.getUser,
+          dailyNutrients: todayData,
+        };
+      } else {
+        console.log('add food first');
+        this.userData = this.emptyUserData;
+        this.emptyUserData.dailyNutrients.addedDate = this.findDate
+          .split('-')
+          .reverse()
+          .join('.');
+      }
+    }
   }
 }

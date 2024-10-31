@@ -1,0 +1,48 @@
+<div class="main-div">
+  <div class="search-holder-div">
+    <p>Search for foods</p>
+    <input type="text" (keyup)="onSearch($event)" />
+    <div class="search-items-list-div">
+      @if (loading) {
+      <p>loading</p>
+      } @else if (noFoods) {
+      <p>No foods found</p>
+      } @else { @for (food of foods; track food._id) {
+      <div>
+        <p>{{ food.name }}</p>
+        <p>{{ food.calories }}</p>
+        <p>{{ food.proteins }}</p>
+        <p>{{ food.carbohydrates }}</p>
+        <p>{{ food.fats }}</p>
+        <button (click)="onSelectFood(food)">Click</button>
+      </div>
+      } }
+    </div>
+  </div>
+  <div class="food-info-div">
+    <div>
+      @if (foodItem) {
+      <div>
+        <p>food: {{ foodItem.name }}</p>
+        <p>calories per 100g: {{ foodItem.calories }}</p>
+        <p>proteins per 100g: {{ foodItem.proteins }}</p>
+        <p>carbohydrates per 100g: {{ foodItem.carbohydrates }}</p>
+        <p>fats per 100g: {{ foodItem.fats }}</p>
+      </div>
+      } @else {
+      <p>no food selected</p>
+      }
+    </div>
+  </div>
+  <div class="food-add-div">
+    @if (foodItem) {
+      <p>Amount grams: <input min="100" type="number" [(ngModel)]="gramsAmount" /></p>
+      <p>Food name: {{ foodItem.name }}</p>
+      <p>Total calories: {{ (foodItem.calories*gramsAmount)/100 }}</p>
+      <p>Total proteins: {{ (foodItem.proteins*gramsAmount)/100 }}</p>
+      <p>Total carbohydrates: {{ (foodItem.carbohydrates*gramsAmount)/100 }}</p>
+      <p>Total fats: {{ (foodItem.fats*gramsAmount)/100 }}</p>
+      <button (click)="addFood(foodItem)">Add</button>
+    }
+  </div>
+</div>
