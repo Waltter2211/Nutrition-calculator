@@ -37,8 +37,9 @@ export class DailyMacrosComponent implements OnInit {
   isError = false;
   disableButton = true;
   currentDate = new Date().toISOString().substring(0, 10).toString();
-  currentDateFormatted = this.currentDate.split('-').reverse().join('.');
-  findDate = new Date().toLocaleDateString();
+  /* currentDateFormatted = this.currentDate.split('-').reverse().join('.'); */
+  /* findDate = new Date().toLocaleDateString(); */
+  findDate = new Date().toISOString().substring(0, 10).split('-').reverse().join('.');
 
   userData: UserDailyStats = {
     goalCalories: 0,
@@ -92,6 +93,10 @@ export class DailyMacrosComponent implements OnInit {
       this.token = foundToken;
       this.service.getUserDailyNutrients(this.token).valueChanges.subscribe({
         next: ({ data, loading }: any) => {
+          /* console.log(this.findDate)
+          console.log(this.currentDate)
+          console.log(this.currentDateFormatted)
+          console.log(this.testDate) */
           this.fetchUserNutritionData(data, loading);
         },
         error: (error) => {
@@ -155,7 +160,11 @@ export class DailyMacrosComponent implements OnInit {
       this.emptyUserData.goalSteps = dataArr.getUser.goalSteps;
       this.findDate = this.findDate.split('-').reverse().join('.');
       const todayData = dataArr.getUser.dailyNutrients.find(
-        (item: DailyNutrient) => item.addedDate === this.findDate
+        (item: DailyNutrient) => {
+          console.log('added date', item.addedDate)
+          console.log('find date', this.findDate)
+          return item.addedDate === this.findDate
+        }
       );
       if (todayData) {
         this.userData = {

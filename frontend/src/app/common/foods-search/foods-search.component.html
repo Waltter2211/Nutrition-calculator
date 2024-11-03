@@ -1,26 +1,27 @@
 <div (click)="onHideSearch()" class="main-div">
   <div class="search-holder-div">
     <!-- <h1>Search for foods</h1> -->
-    <input class="search-bar" type="text" (keyup)="onSearch($event)" placeholder="Search food..." />
+    <input
+      class="search-bar"
+      type="text"
+      (keyup)="onSearch($event)"
+      placeholder="Search food..."
+    />
     <div class="search-items-list-div">
       @if (loading) {
       <p>loading</p>
       } @else if (noFoods) {
       <p>No foods found</p>
-      } @else { 
-        @if (searchVisible) {
-          
-          @for (food of foods; track food._id) {
-        <div>
-          <p>{{ food.name }}</p>
-          <p>{{ food.calories }}</p>
-          <p>{{ food.proteins }}</p>
-          <p>{{ food.carbohydrates }}</p>
-          <p>{{ food.fats }}</p>
-          <button (click)="onSelectFood(food)">Click</button>
-        </div>
-        } }
-        }
+      } @else { @if (searchVisible) { @for (food of foods; track food._id) {
+      <div>
+        <p>{{ food.name }}</p>
+        <p>{{ food.calories }}</p>
+        <p>{{ food.proteins }}</p>
+        <p>{{ food.carbohydrates }}</p>
+        <p>{{ food.fats }}</p>
+        <button (click)="onSelectFood(food)">Click</button>
+      </div>
+      } } }
     </div>
   </div>
   <div class="food-info-div">
@@ -41,14 +42,18 @@
   </div>
   <div class="food-add-div">
     @if (foodItem) {
-      <h2>Add food</h2>
-      <p>Amount grams: <input min="100" type="number" [(ngModel)]="gramsAmount" /></p>
-      <p>Food name: {{ foodItem.name }}</p>
-      <p>Total calories: {{ (foodItem.calories*gramsAmount)/100 }}</p>
-      <p>Total proteins: {{ (foodItem.proteins*gramsAmount)/100 }}</p>
-      <p>Total carbohydrates: {{ (foodItem.carbohydrates*gramsAmount)/100 }}</p>
-      <p>Total fats: {{ (foodItem.fats*gramsAmount)/100 }}</p>
-      <button (click)="addFood(foodItem)">Add</button>
+    <h2>Add food</h2>
+    <p>
+      Amount grams: <input min="100" type="number" [(ngModel)]="gramsAmount" />
+    </p>
+    <p>Food name: {{ foodItem.name }}</p>
+    <p>Total calories: {{ (foodItem.calories * gramsAmount) / 100 }}</p>
+    <p>Total proteins: {{ (foodItem.proteins * gramsAmount) / 100 }}</p>
+    <p>
+      Total carbohydrates: {{ (foodItem.carbohydrates * gramsAmount) / 100 }}
+    </p>
+    <p>Total fats: {{ (foodItem.fats * gramsAmount) / 100 }}</p>
+    <button (click)="addFood(foodItem)">Add</button>
     }
   </div>
 </div>

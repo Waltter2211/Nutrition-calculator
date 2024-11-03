@@ -203,7 +203,7 @@ export const resolvers = {
               const foundNutrientCard = await NutrientCard.findOne({
                 $and: [
                   { user: foundUser._id },
-                  { addedDate: new Date().toLocaleDateString() },
+                  { addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.') },
                 ],
               });
               // If nutrient card is found for current day push food object to foods list
@@ -243,7 +243,7 @@ export const resolvers = {
                   dailyCarbohydrates: 0,
                   dailyFats: 0,
                   mealsList: [],
-                  addedDate: new Date().toLocaleDateString(),
+                  addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.'),
                 };
 
                 // Create new nutrient card object and push it to database
@@ -273,7 +273,7 @@ export const resolvers = {
                   dailyCarbohydrates: createdMeal.carbohydratesCount,
                   dailyFats: createdMeal.fatsCount,
                   mealsList: [createdMeal._id],
-                  addedDate: new Date().toLocaleDateString(),
+                  addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.'),
                 };
 
                 // Update created meal to created nutrient cards list
@@ -286,7 +286,7 @@ export const resolvers = {
                 const foundNutrientCard = await NutrientCard.findOne({
                   $and: [
                     { user: foundUser._id },
-                    { addedDate: new Date().toLocaleDateString() },
+                    { addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.') },
                   ],
                 });
                 // If newly created nutrient card is found
