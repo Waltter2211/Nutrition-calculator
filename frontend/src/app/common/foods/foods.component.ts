@@ -1,11 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { MasterService } from '../../services/master.service';
-import { GetAllFoodsGQL, SearchFoodsGQL } from '../../../../graphql/generated';
-import { FormsModule } from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FoodsSearchComponent } from '../foods-search/foods-search.component';
 
 @Component({
@@ -17,12 +12,15 @@ import { FoodsSearchComponent } from '../foods-search/foods-search.component';
   styleUrl: './foods.component.css',
 })
 export class FoodsComponent {
-  readonly dialog = inject(MatDialog)
+  constructor(readonly dialog: MatDialog) {}
 
   openDialog() {
-    const dialogRef = this.dialog.open(FoodsSearchComponent, { width: '60%', height: '600px' })
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`dialog result ${result}`)
-    })
+    const dialogRef = this.dialog.open(FoodsSearchComponent, {
+      width: '60%',
+      height: '600px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`dialog result ${result}`);
+    });
   }
 }

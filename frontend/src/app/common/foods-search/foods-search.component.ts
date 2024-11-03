@@ -1,49 +1,67 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SearchFoodsGQL, GetAllFoodsGQL, SearchFoodsQuery, AddFoodToUserGQL, AddFoodToUserInput } from '../../../../graphql/generated';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  SearchFoodsGQL,
+  AddFoodToUserGQL,
+  AddFoodToUserInput,
+} from '../../../../graphql/generated';
 import { MasterService } from '../../services/master.service';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { DialogRef } from '@angular/cdk/dialog';
+import { FoodsComponent } from '../foods/foods.component';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-foods-search',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatInputModule],
   templateUrl: './foods-search.component.html',
   styleUrl: './foods-search.component.css',
 })
 export class FoodsSearchComponent implements OnInit {
-  constructor(private service: MasterService, private searchFoodsService: SearchFoodsGQL, private addFoodService: AddFoodToUserGQL, private toastr: ToastrService) {}
+  constructor(
+    private service: MasterService,
+    private searchFoodsService: SearchFoodsGQL,
+    private addFoodService: AddFoodToUserGQL,
+    private toastr: ToastrService,
+    private dialogRef: DialogRef<FoodsComponent>
+  ) {}
   loading = false;
   foods: any;
-  test = ''
-  noFoods = false
-  foodItem: any = ''
-  token: string = ''
-  gramsAmount: number = 100
-  
+  test = '';
+  noFoods = false;
+  foodItem: any = '';
+  token: string = '';
+  gramsAmount: number = 100;
+  searchVisible: boolean = false
+
   ngOnInit(): void {
-    const foundToken = localStorage.getItem('token')
+    const foundToken = localStorage.getItem('token');
     if (foundToken) {
-      this.token = foundToken
-      console.log(this.token)
+      this.token = foundToken;
+      console.log(this.token);
     }
+  }
+
+  onHideSearch() {
+    this.searchVisible = false
   }
 
   onSearch(event: any) {
     if (event.target.value) {
-      const foodsName = event.target.value
+      const foodsName = event.target.value;
       this.searchFoodsService.fetch({ foodsName }).subscribe({
         next: ({ data, loading }) => {
-          this.loading = true
+          this.loading = true;
           if (!loading) {
-            this.noFoods = false
-            this.loading = loading
-            this.foods = data.searchFoods
+            this.searchVisible = true
+            this.noFoods = false;
+            this.loading = loading;
+            this.foods = data.searchFoods;
             if (this.foods.length === 0) {
-              this.noFoods = true
+              this.noFoods = true;
             } else {
-              this.noFoods = false
+              this.noFoods = false;
             }
           }
         },
@@ -52,7 +70,7 @@ export class FoodsSearchComponent implements OnInit {
         },
       });
     } else {
-      this.foods = []
+      this.foods = [];
       /* this.getAllFoods.fetch().subscribe({
         next: ({ data, loading }) => {
           this.loading = true
@@ -70,33 +88,36 @@ export class FoodsSearchComponent implements OnInit {
   }
 
   onSelectFood(food: any) {
-    console.log(food)
-    this.foods = []
-    this.foodItem = food
+    console.log(food);
+    this.foods = [];
+    this.foodItem = food;
   }
 
   addFood(mealItem: any) {
     const mealInputObj: AddFoodToUserInput = {
       foodId: mealItem._id,
       token: this.token,
-      caloriesCount: Math.round((mealItem.calories*this.gramsAmount)/100),
-      proteinsCount: Math.round((mealItem.proteins*this.gramsAmount)/100),
-      carbohydratesCount: Math.round((mealItem.carbohydrates*this.gramsAmount)/100),
-      fatsCount: Math.round((mealItem.fats*this.gramsAmount)/100),
-      gramsEaten: this.gramsAmount
-    }
-    console.log(`food added ${mealInputObj}`)
-    this.addFoodService.mutate({input: mealInputObj}).subscribe({
+      caloriesCount: Math.round((mealItem.calories * this.gramsAmount) / 100),
+      proteinsCount: Math.round((mealItem.proteins * this.gramsAmount) / 100),
+      carbohydratesCount: Math.round(
+        (mealItem.carbohydrates * this.gramsAmount) / 100
+      ),
+      fatsCount: Math.round((mealItem.fats * this.gramsAmount) / 100),
+      gramsEaten: this.gramsAmount,
+    };
+    console.log(`food added ${mealInputObj}`);
+    this.addFoodService.mutate({ input: mealInputObj }).subscribe({
       next: () => {
-        console.log('added food to user')
-        this.toastr.success(`Added ${this.foodItem.name}`, 'success', {
+        console.log('added food to user');
+        this.toastr.success(`Added ${this.foodItem.name}`, 'Success', {
           closeButton: true,
-          progressBar: true
-        })
+          progressBar: true,
+        });
+        this.dialogRef.close()
       },
       error: (error) => {
-        console.log(error)
-      }
-    })
+        console.log(error);
+      },
+    });
   }
 }

@@ -1,41 +1,47 @@
-<div class="main-div">
+<div (click)="onHideSearch()" class="main-div">
   <div class="search-holder-div">
-    <p>Search for foods</p>
-    <input type="text" (keyup)="onSearch($event)" />
+    <!-- <h1>Search for foods</h1> -->
+    <input class="search-bar" type="text" (keyup)="onSearch($event)" placeholder="Search food..." />
     <div class="search-items-list-div">
       @if (loading) {
       <p>loading</p>
       } @else if (noFoods) {
       <p>No foods found</p>
-      } @else { @for (food of foods; track food._id) {
-      <div>
-        <p>{{ food.name }}</p>
-        <p>{{ food.calories }}</p>
-        <p>{{ food.proteins }}</p>
-        <p>{{ food.carbohydrates }}</p>
-        <p>{{ food.fats }}</p>
-        <button (click)="onSelectFood(food)">Click</button>
-      </div>
-      } }
+      } @else { 
+        @if (searchVisible) {
+          
+          @for (food of foods; track food._id) {
+        <div>
+          <p>{{ food.name }}</p>
+          <p>{{ food.calories }}</p>
+          <p>{{ food.proteins }}</p>
+          <p>{{ food.carbohydrates }}</p>
+          <p>{{ food.fats }}</p>
+          <button (click)="onSelectFood(food)">Click</button>
+        </div>
+        } }
+        }
     </div>
   </div>
   <div class="food-info-div">
     <div>
       @if (foodItem) {
       <div>
-        <p>food: {{ foodItem.name }}</p>
-        <p>calories per 100g: {{ foodItem.calories }}</p>
-        <p>proteins per 100g: {{ foodItem.proteins }}</p>
-        <p>carbohydrates per 100g: {{ foodItem.carbohydrates }}</p>
-        <p>fats per 100g: {{ foodItem.fats }}</p>
+        <h2>Food information per 100 grams</h2>
+        <p>Food: {{ foodItem.name }}</p>
+        <p>Calories per 100g: {{ foodItem.calories }}</p>
+        <p>Proteins per 100g: {{ foodItem.proteins }}</p>
+        <p>Carbohydrates per 100g: {{ foodItem.carbohydrates }}</p>
+        <p>Fats per 100g: {{ foodItem.fats }}</p>
       </div>
       } @else {
-      <p>no food selected</p>
+      <p>No food selected</p>
       }
     </div>
   </div>
   <div class="food-add-div">
     @if (foodItem) {
+      <h2>Add food</h2>
       <p>Amount grams: <input min="100" type="number" [(ngModel)]="gramsAmount" /></p>
       <p>Food name: {{ foodItem.name }}</p>
       <p>Total calories: {{ (foodItem.calories*gramsAmount)/100 }}</p>
