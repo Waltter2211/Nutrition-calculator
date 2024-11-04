@@ -33,6 +33,8 @@ export type DailyNutrient = {
   dailyProteins: number;
   dailyCarbohydrates: number;
   dailyFats: number;
+  dailyWater: number;
+  dailySteps: number;
   mealsList: Meal[];
 };
 

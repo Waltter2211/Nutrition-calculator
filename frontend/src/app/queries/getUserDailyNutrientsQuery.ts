@@ -9,6 +9,8 @@ export const GET_USER_DAILY_NUTRIENTS = gql`
         dailyProteins
         dailyCarbohydrates
         dailyFats
+        dailyWater
+        dailySteps
         addedDate
         mealsList {
           _id

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { REGISTER_USER } from '../mutations/registerUserMutation';
+import { ADD_USER } from '../mutations/registerUserMutation';
 import { LOGIN_USER } from '../mutations/loginUserMutation';
 import { GET_USER } from '../queries/getUserQuery';
 import { GET_USER_DAILY_NUTRIENTS } from '../queries/getUserDailyNutrientsQuery';
@@ -18,7 +18,7 @@ export class MasterService {
 
   registerUser(input: any) {
     return this.apollo.mutate({
-      mutation: REGISTER_USER,
+      mutation: ADD_USER,
       variables: {
         input,
       },

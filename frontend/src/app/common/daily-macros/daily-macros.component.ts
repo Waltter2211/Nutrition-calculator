@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RoundProgressComponent } from 'angular-svg-round-progressbar';
+import { AddNutrientCardGQL } from '../../../../graphql/generated';
 
 @Component({
   selector: 'app-daily-macros',
@@ -37,8 +38,6 @@ export class DailyMacrosComponent implements OnInit {
   isError = false;
   disableButton = true;
   currentDate = new Date().toISOString().substring(0, 10).toString();
-  /* currentDateFormatted = this.currentDate.split('-').reverse().join('.'); */
-  /* findDate = new Date().toLocaleDateString(); */
   findDate = new Date().toISOString().substring(0, 10).split('-').reverse().join('.');
 
   userData: UserDailyStats = {
@@ -55,9 +54,12 @@ export class DailyMacrosComponent implements OnInit {
       dailyProteins: 0,
       dailyCarbohydrates: 0,
       dailyFats: 0,
+      dailyWater: 0,
+      dailySteps: 0,
       mealsList: [],
     },
   };
+
   allData: UserAllData = {
     goalCalories: 0,
     goalProteins: 0,
@@ -82,21 +84,27 @@ export class DailyMacrosComponent implements OnInit {
       dailyProteins: 0,
       dailyCarbohydrates: 0,
       dailyFats: 0,
+      dailyWater: 0,
+      dailySteps: 0,
       mealsList: [],
     },
   };
 
-  constructor(private service: MasterService, private toastr: ToastrService) {}
+  constructor(private service: MasterService, private addNutrientCardService: AddNutrientCardGQL, private toastr: ToastrService) {}
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
     if (foundToken) {
       this.token = foundToken;
+      this.addNutrientCardService.mutate({ input: { token: this.token } }).subscribe({
+        next() {
+          console.log('success')
+        },
+        error(error) {
+          console.log(error)
+        },
+      })
       this.service.getUserDailyNutrients(this.token).valueChanges.subscribe({
         next: ({ data, loading }: any) => {
-          /* console.log(this.findDate)
-          console.log(this.currentDate)
-          console.log(this.currentDateFormatted)
-          console.log(this.testDate) */
           this.fetchUserNutritionData(data, loading);
         },
         error: (error) => {
@@ -161,8 +169,6 @@ export class DailyMacrosComponent implements OnInit {
       this.findDate = this.findDate.split('-').reverse().join('.');
       const todayData = dataArr.getUser.dailyNutrients.find(
         (item: DailyNutrient) => {
-          console.log('added date', item.addedDate)
-          console.log('find date', this.findDate)
           return item.addedDate === this.findDate
         }
       );

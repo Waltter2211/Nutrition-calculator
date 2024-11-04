@@ -64,24 +64,24 @@
         }
       </div>
       <div class="macro-card">
-        @if (userData.dailyNutrients.dailyCarbohydrates >=
-        userData.goalCarbohydrates) {
+        @if (userData.dailyNutrients.dailyWater >=
+        userData.goalWater) {
         <p>Daily goal reached</p>
         <p>
           {{
-            (userData.goalCarbohydrates -
-              userData.dailyNutrients.dailyCarbohydrates) *
+            (userData.goalWater -
+              userData.dailyNutrients.dailyWater) *
               -1
-          }}g of carbohydrates over daily goal
+          }}l of water over daily goal
         </p>
         } 
         @else {
           <!-- TODO ADD WATER -->
           <p>Water</p>
           <div class="progress-bar-div">
-            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyCarbohydrates }}/{{ userData.goalWater }}l</div>
-            <round-progress [current]="userData.dailyNutrients.dailyCarbohydrates"
-            [max]="userData.goalCarbohydrates" [color]="'aqua'"
+            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyWater }}/{{ userData.goalWater }}l</div>
+            <round-progress [current]="userData.dailyNutrients.dailyWater"
+            [max]="userData.goalWater" [color]="'aqua'"
             [background]="'#eaeaea'" [radius]="100" [stroke]="20"
             [semicircle]="true" [rounded]="false" [clockwise]="true"
             [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"
@@ -133,19 +133,19 @@
       </div>
       <!-- TODO ADD STEPS -->
       <div class="macro-card">
-        @if (userData.dailyNutrients.dailyFats >= userData.goalFats) {
+        @if (userData.dailyNutrients.dailySteps >= userData.goalSteps) {
         <p>Daily goal reached</p>
         <p>
-          {{ (userData.goalFats - userData.dailyNutrients.dailyFats) * -1 }}g of
-          fats over daily goal
+          {{ (userData.goalSteps - userData.dailyNutrients.dailySteps) * -1 }} of
+          steps over daily goal
         </p>
         } 
         @else {
           <p>Steps</p>
           <div class="progress-bar-div">
-            <div class="progress-bar-text">{{ userData.dailyNutrients.dailyFats }}/{{ userData.goalSteps }}steps</div>
-            <round-progress [current]="userData.dailyNutrients.dailyFats"
-            [max]="userData.goalFats" [color]="'brown'"
+            <div class="progress-bar-text">{{ userData.dailyNutrients.dailySteps }}/{{ userData.goalSteps }}steps</div>
+            <round-progress [current]="userData.dailyNutrients.dailySteps"
+            [max]="userData.goalSteps" [color]="'brown'"
             [background]="'#eaeaea'" [radius]="100" [stroke]="20"
             [semicircle]="true" [rounded]="false" [clockwise]="true"
             [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'"

@@ -19,6 +19,8 @@ export const typeDefs = `#graphql
         loginUser(input: LoginInput!): LoginInfo
         "Mutation to add User"
         addUser(input: CreateUserInput!): User
+        "Mutation to add Nutrient card for user"
+        addNutrientCard(input: NutrientCardInput!): UpdateSuccess
         "Mutation to add Food for user"
         addFoodToUser(input: AddFoodToUserInput!): UpdateSuccess
         "Mutation to update user"
@@ -89,13 +91,14 @@ export const typeDefs = `#graphql
         dailyProteins: Int!
         dailyCarbohydrates: Int!
         dailyFats: Int!
+        dailyWater: Int!
+        dailySteps: Int!
         mealsList: [Meal]!
         addedDate: String!
     }
 
     "NutrientCard input for creating nutrient card object"
     input NutrientCardInput {
-        userId: String!
         token: String!
     }
 

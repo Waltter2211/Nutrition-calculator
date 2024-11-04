@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import { REGISTER_USER } from '../../mutations/registerUserMutation';
+import { ADD_USER } from '../../mutations/registerUserMutation';
 import { MasterService } from '../../services/master.service';
 
 @Component({

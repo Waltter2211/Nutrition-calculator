@@ -1,7 +1,7 @@
 import { gql } from "apollo-angular";
 
-export const REGISTER_USER = gql`
-  mutation AddUser($input: CreateUserInput!) {
+export const ADD_USER = gql`
+  mutation addUser($input: CreateUserInput!) {
     addUser(input: $input) {
       username
     }

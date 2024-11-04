@@ -98,6 +98,8 @@ export type Mutation = {
   addFood?: Maybe<Food>;
   /** Mutation to add Food for user */
   addFoodToUser?: Maybe<UpdateSuccess>;
+  /** Mutation to add Nutrient card for user */
+  addNutrientCard?: Maybe<UpdateSuccess>;
   /** Mutation to add User */
   addUser?: Maybe<User>;
   /** Mutation to delete food */
@@ -122,6 +124,11 @@ export type MutationAddFoodArgs = {
 
 export type MutationAddFoodToUserArgs = {
   input: AddFoodToUserInput;
+};
+
+
+export type MutationAddNutrientCardArgs = {
+  input: NutrientCardInput;
 };
 
 
@@ -168,6 +175,8 @@ export type NutrientCard = {
   dailyCarbohydrates: Scalars['Int']['output'];
   dailyFats: Scalars['Int']['output'];
   dailyProteins: Scalars['Int']['output'];
+  dailySteps: Scalars['Int']['output'];
+  dailyWater: Scalars['Int']['output'];
   mealsList: Array<Maybe<Meal>>;
   user: User;
 };
@@ -175,7 +184,6 @@ export type NutrientCard = {
 /** NutrientCard input for creating nutrient card object */
 export type NutrientCardInput = {
   token: Scalars['String']['input'];
-  userId: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -254,6 +262,13 @@ export type AddFoodToUserMutationVariables = Exact<{
 
 export type AddFoodToUserMutation = { __typename?: 'Mutation', addFoodToUser?: { __typename?: 'UpdateSuccess', acknowledged?: boolean | null, matchedCount?: number | null, modifiedCount?: number | null, upsertedId?: string | null } | null };
 
+export type AddNutrientCardMutationVariables = Exact<{
+  input: NutrientCardInput;
+}>;
+
+
+export type AddNutrientCardMutation = { __typename?: 'Mutation', addNutrientCard?: { __typename?: 'UpdateSuccess', acknowledged?: boolean | null, matchedCount?: number | null, modifiedCount?: number | null, upsertedId?: string | null } | null };
+
 export type DeleteMealFromUserMutationVariables = Exact<{
   input: DeleteMealFromUserInput;
 }>;
@@ -285,7 +300,7 @@ export type GetUserDailyNutrientsQueryVariables = Exact<{
 }>;
 
 
-export type GetUserDailyNutrientsQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', goalCalories: number, goalProteins: number, goalCarbohydrates: number, goalFats: number, goalWater: number, goalSteps: number, dailyNutrients: Array<{ __typename?: 'NutrientCard', _id: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, addedDate: string, mealsList: Array<{ __typename?: 'Meal', _id: string, caloriesCount: number, proteinsCount: number, carbohydratesCount: number, fatsCount: number, gramsEaten: number, foodEaten: { __typename?: 'Food', _id: string, name: string } } | null> } | null> } | null };
+export type GetUserDailyNutrientsQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', goalCalories: number, goalProteins: number, goalCarbohydrates: number, goalFats: number, goalWater: number, goalSteps: number, dailyNutrients: Array<{ __typename?: 'NutrientCard', _id: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, dailyWater: number, dailySteps: number, addedDate: string, mealsList: Array<{ __typename?: 'Meal', _id: string, caloriesCount: number, proteinsCount: number, carbohydratesCount: number, fatsCount: number, gramsEaten: number, foodEaten: { __typename?: 'Food', _id: string, name: string } } | null> } | null> } | null };
 
 export type GetUserQueryVariables = Exact<{
   token: Scalars['String']['input'];
@@ -322,6 +337,27 @@ export const AddFoodToUserDocument = gql`
       super(apollo);
     }
   }
+export const AddNutrientCardDocument = gql`
+    mutation addNutrientCard($input: NutrientCardInput!) {
+  addNutrientCard(input: $input) {
+    acknowledged
+    matchedCount
+    modifiedCount
+    upsertedId
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddNutrientCardGQL extends Apollo.Mutation<AddNutrientCardMutation, AddNutrientCardMutationVariables> {
+    document = AddNutrientCardDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const DeleteMealFromUserDocument = gql`
     mutation deleteMealFromUser($input: DeleteMealFromUserInput!) {
   deleteMealFromUser(input: $input) {
@@ -344,7 +380,7 @@ export const DeleteMealFromUserDocument = gql`
     }
   }
 export const LoginUserDocument = gql`
-    mutation LoginUser($input: LoginInput!) {
+    mutation loginUser($input: LoginInput!) {
   loginUser(input: $input) {
     token
   }
@@ -362,7 +398,7 @@ export const LoginUserDocument = gql`
     }
   }
 export const AddUserDocument = gql`
-    mutation AddUser($input: CreateUserInput!) {
+    mutation addUser($input: CreateUserInput!) {
   addUser(input: $input) {
     username
   }
@@ -411,6 +447,8 @@ export const GetUserDailyNutrientsDocument = gql`
       dailyProteins
       dailyCarbohydrates
       dailyFats
+      dailyWater
+      dailySteps
       addedDate
       mealsList {
         _id

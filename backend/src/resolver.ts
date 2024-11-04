@@ -46,7 +46,7 @@ export const resolvers = {
     // Resolver for fetching single or multiple foods with it's name
     searchFoods: async (_: any, { foodsName }: { foodsName: string }) => {
       try {
-        return await Food.find({ name: { $regex: foodsName } })   
+        return await Food.find({ name: { $regex: foodsName } });
       } catch (error) {
         return error;
       }
@@ -131,7 +131,7 @@ export const resolvers = {
             return await User.updateOne({ _id: foundUser._id }, foundUser);
           }
         } else {
-          throw Error("Invalid token");
+          throw new Error("Invalid token");
         }
       } catch (error) {
         return error;
@@ -145,7 +145,7 @@ export const resolvers = {
         if (typeof verifiedToken === "object") {
           return await User.deleteOne({ _id: verifiedToken.userId });
         } else {
-          throw Error("Invalid token");
+          throw new Error("Invalid token");
         }
       } catch (error) {
         return error;
@@ -187,6 +187,81 @@ export const resolvers = {
       }
     },
 
+    // Resolver for adding nutrient card for user
+    addNutrientCard: async (_: any, { input }: any) => {
+      try {
+        const verifiedToken = jwtTokenVerifier(input.token);
+        if (typeof verifiedToken === "object") {
+          const foundUser = await User.findById(verifiedToken.userId);
+          if (foundUser) {
+            const foundNutrientCard = await NutrientCard.findOne({
+              $and: [
+                { user: foundUser._id },
+                {
+                  addedDate: new Date()
+                    .toISOString()
+                    .substring(0, 10)
+                    .split("-")
+                    .reverse()
+                    .join("."),
+                },
+              ],
+            });
+            if (!foundNutrientCard) {
+              const nutrientCardObj = {
+                user: foundUser._id,
+                dailyCalories: 0,
+                dailyProteins: 0,
+                dailyCarbohydrates: 0,
+                dailyFats: 0,
+                dailyWater: 0,
+                dailySteps: 0,
+                mealsList: [],
+                addedDate: new Date()
+                  .toISOString()
+                  .substring(0, 10)
+                  .split("-")
+                  .reverse()
+                  .join("."),
+              };
+
+              // Create new nutrient card object and push it to database
+              await NutrientCard.create(nutrientCardObj);
+
+              // Fetch newly created nutrient card from database
+              const foundNutrientCard = await NutrientCard.findOne({
+                $and: [
+                  { user: foundUser._id },
+                  {
+                    addedDate: new Date()
+                      .toISOString()
+                      .substring(0, 10)
+                      .split("-")
+                      .reverse()
+                      .join("."),
+                  },
+                ],
+              });
+
+              // If newly created nutrient card is found
+              if (foundNutrientCard) {
+                // Push it's id to user object
+                foundUser.dailyNutrients.push(foundNutrientCard._id);
+                // Update user with updated user object
+                return await User.updateOne({ _id: foundUser._id }, foundUser);
+              }
+            }
+          } else {
+            throw new Error("No valid user found");
+          }
+        } else {
+          throw new Error("Invalid user token");
+        }
+      } catch (error) {
+        return error;
+      }
+    },
+
     // Resolver for adding food to user nutrient card list
     addFoodToUser: async (_: any, { input }: any) => {
       // Try to fetch user with user ID
@@ -203,7 +278,14 @@ export const resolvers = {
               const foundNutrientCard = await NutrientCard.findOne({
                 $and: [
                   { user: foundUser._id },
-                  { addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.') },
+                  {
+                    addedDate: new Date()
+                      .toISOString()
+                      .substring(0, 10)
+                      .split("-")
+                      .reverse()
+                      .join("."),
+                  },
                 ],
               });
               // If nutrient card is found for current day push food object to foods list
@@ -235,15 +317,22 @@ export const resolvers = {
                 );
               }
               // Else create new food card with found food nutrient details
-              else {
+              /* else {
                 const nutrientCardObj = {
                   user: foundUser._id,
                   dailyCalories: 0,
                   dailyProteins: 0,
                   dailyCarbohydrates: 0,
                   dailyFats: 0,
+                  dailyWater: 0,
+                  dailySteps: 0,
                   mealsList: [],
-                  addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.'),
+                  addedDate: new Date()
+                    .toISOString()
+                    .substring(0, 10)
+                    .split("-")
+                    .reverse()
+                    .join("."),
                 };
 
                 // Create new nutrient card object and push it to database
@@ -273,7 +362,12 @@ export const resolvers = {
                   dailyCarbohydrates: createdMeal.carbohydratesCount,
                   dailyFats: createdMeal.fatsCount,
                   mealsList: [createdMeal._id],
-                  addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.'),
+                  addedDate: new Date()
+                    .toISOString()
+                    .substring(0, 10)
+                    .split("-")
+                    .reverse()
+                    .join("."),
                 };
 
                 // Update created meal to created nutrient cards list
@@ -286,7 +380,14 @@ export const resolvers = {
                 const foundNutrientCard = await NutrientCard.findOne({
                   $and: [
                     { user: foundUser._id },
-                    { addedDate: new Date().toISOString().substring(0, 10).split('-').reverse().join('.') },
+                    {
+                      addedDate: new Date()
+                        .toISOString()
+                        .substring(0, 10)
+                        .split("-")
+                        .reverse()
+                        .join("."),
+                    },
                   ],
                 });
                 // If newly created nutrient card is found
@@ -299,11 +400,13 @@ export const resolvers = {
                     foundUser
                   );
                 }
-              }
+              } */
             }
+          } else {
+            throw new Error("No valid user found");
           }
         } else {
-          throw Error("Invalid token");
+          throw new Error("Invalid token");
         }
       } catch (error) {
         return error;
@@ -353,10 +456,10 @@ export const resolvers = {
               throw new Error("No meal found with ID");
             }
           } else {
-            throw new Error("No user found with ID");
+            throw new Error("No valid user found");
           }
         } else {
-          throw Error("Invalid token");
+          throw new Error("Invalid token");
         }
       } catch (error) {
         return error;

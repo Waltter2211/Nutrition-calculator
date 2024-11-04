@@ -28,6 +28,16 @@ const nutrientCardSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    dailyWater: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    dailySteps: {
+      type: Number,
+      required: true,
+      default: 0
+    },
     mealsList: [
       {
         type: [Types.ObjectId],
