@@ -6,7 +6,7 @@
   <div class="buttons-div">
     <div>
       <input type="date" [max]="currentDate" [(ngModel)]="findDate" />
-      <button (click)="onClick()">Click</button>
+      <button (click)="onSwapDate()">Click</button>
     </div>
 
     <p>{{ userData.dailyNutrients.addedDate }}</p>
@@ -76,7 +76,6 @@
         </p>
         } 
         @else {
-          <!-- TODO ADD WATER -->
           <p>Water</p>
           <div class="progress-bar-div">
             <div class="progress-bar-text">{{ userData.dailyNutrients.dailyWater }}/{{ userData.goalWater }}l</div>
@@ -131,7 +130,6 @@
           </div>
         }
       </div>
-      <!-- TODO ADD STEPS -->
       <div class="macro-card">
         @if (userData.dailyNutrients.dailySteps >= userData.goalSteps) {
         <p>Daily goal reached</p>
@@ -154,6 +152,47 @@
         }
       </div>
     </div>
+    <div class="add-buttons-div">
+      <div class="add-water-button">
+        <!-- <button class="add-button" [disabled]="isCurrentDate" (click)="onAddWater()" title="Add water"><i class="fa-solid fa-glass-water"></i></button> -->
+        <button
+            mat-icon-button
+            class="add-buttons"
+            title="Add water"
+            [disabled]="isCurrentDate"
+            aria-label="Example icon-button with share icon"
+            (click)="onAddWater()"
+          >
+            <mat-icon>local_drink</mat-icon>
+        </button>
+      </div>
+      <div class="add-food-button">
+        <!-- <button class="add-button" [disabled]="isCurrentDate" (click)="onAddFood()" title="Add food"><i class="fa-solid fa-utensils"></i></button> -->
+        <button
+            mat-icon-button
+            class="add-buttons"
+            title="Add food"
+            [disabled]="isCurrentDate"
+            aria-label="Example icon-button with share icon"
+            (click)="onAddFood()"
+          >
+            <mat-icon>fastfood</mat-icon>
+        </button>
+      </div>
+      <div class="add-steps-button">
+        <!-- <button class="add-button" [disabled]="isCurrentDate" (click)="onAddSteps()" title="Add steps"><i class="fa-solid fa-shoe-prints"></i></button> -->
+        <button
+            mat-icon-button
+            class="add-buttons"
+            title="Add steps"
+            [disabled]="isCurrentDate"
+            aria-label="Example icon-button with share icon"
+            (click)="onAddSteps()"
+          >
+            <mat-icon>directions_walk</mat-icon>
+        </button>
+      </div>
+    </div>
     <div class="foods-eaten-div">
       <div class="foods-list">
         @if (userData.dailyNutrients.mealsList.length > 0) { @for (meal of
@@ -174,6 +213,7 @@
           <button
             mat-icon-button
             class="example-icon"
+            [disabled]="isCurrentDate"
             aria-label="Example icon-button with share icon"
             (click)="onDelete(meal._id, meal.foodEaten.name)"
           >

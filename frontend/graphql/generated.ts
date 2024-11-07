@@ -28,6 +28,17 @@ export type AddFoodToUserInput = {
   token: Scalars['String']['input'];
 };
 
+/** AddStepsToUser input for adding steps to user's nutrient card */
+export type AddStepsToUserInput = {
+  stepsCount: Scalars['Int']['input'];
+  token: Scalars['String']['input'];
+};
+
+/** AddWaterToUser input for adding water to user's nutrient card */
+export type AddWaterToUserInput = {
+  token: Scalars['String']['input'];
+};
+
 /** User input for creating user type */
 export type CreateUserInput = {
   email: Scalars['String']['input'];
@@ -100,8 +111,12 @@ export type Mutation = {
   addFoodToUser?: Maybe<UpdateSuccess>;
   /** Mutation to add Nutrient card for user */
   addNutrientCard?: Maybe<UpdateSuccess>;
+  /** Mutation to add Steps for user */
+  addStepsToUser?: Maybe<UpdateSuccess>;
   /** Mutation to add User */
   addUser?: Maybe<User>;
+  /** Mutation to add Water for user */
+  addWaterToUser?: Maybe<UpdateSuccess>;
   /** Mutation to delete food */
   deleteFood?: Maybe<UpdateSuccess>;
   /** Mutation to delete Meal */
@@ -132,8 +147,18 @@ export type MutationAddNutrientCardArgs = {
 };
 
 
+export type MutationAddStepsToUserArgs = {
+  input: AddStepsToUserInput;
+};
+
+
 export type MutationAddUserArgs = {
   input: CreateUserInput;
+};
+
+
+export type MutationAddWaterToUserArgs = {
+  input: AddWaterToUserInput;
 };
 
 
@@ -269,6 +294,20 @@ export type AddNutrientCardMutationVariables = Exact<{
 
 export type AddNutrientCardMutation = { __typename?: 'Mutation', addNutrientCard?: { __typename?: 'UpdateSuccess', acknowledged?: boolean | null, matchedCount?: number | null, modifiedCount?: number | null, upsertedId?: string | null } | null };
 
+export type AddStepsToUserMutationVariables = Exact<{
+  input: AddStepsToUserInput;
+}>;
+
+
+export type AddStepsToUserMutation = { __typename?: 'Mutation', addStepsToUser?: { __typename?: 'UpdateSuccess', acknowledged?: boolean | null, matchedCount?: number | null, modifiedCount?: number | null, upsertedId?: string | null } | null };
+
+export type AddWaterToUserMutationVariables = Exact<{
+  input: AddWaterToUserInput;
+}>;
+
+
+export type AddWaterToUserMutation = { __typename?: 'Mutation', addWaterToUser?: { __typename?: 'UpdateSuccess', acknowledged?: boolean | null, matchedCount?: number | null, modifiedCount?: number | null, upsertedId?: string | null } | null };
+
 export type DeleteMealFromUserMutationVariables = Exact<{
   input: DeleteMealFromUserInput;
 }>;
@@ -353,6 +392,48 @@ export const AddNutrientCardDocument = gql`
   })
   export class AddNutrientCardGQL extends Apollo.Mutation<AddNutrientCardMutation, AddNutrientCardMutationVariables> {
     document = AddNutrientCardDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddStepsToUserDocument = gql`
+    mutation addStepsToUser($input: AddStepsToUserInput!) {
+  addStepsToUser(input: $input) {
+    acknowledged
+    matchedCount
+    modifiedCount
+    upsertedId
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddStepsToUserGQL extends Apollo.Mutation<AddStepsToUserMutation, AddStepsToUserMutationVariables> {
+    document = AddStepsToUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddWaterToUserDocument = gql`
+    mutation addWaterToUser($input: AddWaterToUserInput!) {
+  addWaterToUser(input: $input) {
+    acknowledged
+    matchedCount
+    modifiedCount
+    upsertedId
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddWaterToUserGQL extends Apollo.Mutation<AddWaterToUserMutation, AddWaterToUserMutationVariables> {
+    document = AddWaterToUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

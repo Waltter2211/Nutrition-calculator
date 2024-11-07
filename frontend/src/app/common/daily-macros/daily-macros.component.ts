@@ -12,7 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RoundProgressComponent } from 'angular-svg-round-progressbar';
-import { AddNutrientCardGQL } from '../../../../graphql/generated';
+import {
+  AddNutrientCardGQL,
+  AddWaterToUserGQL,
+} from '../../../../graphql/generated';
+import { MatDialog } from '@angular/material/dialog';
+import { StepsAddComponent } from '../steps-add/steps-add.component';
+import { FoodsSearchComponent } from '../foods-search/foods-search.component';
 
 @Component({
   selector: 'app-daily-macros',
@@ -38,7 +44,13 @@ export class DailyMacrosComponent implements OnInit {
   isError = false;
   disableButton = true;
   currentDate = new Date().toISOString().substring(0, 10).toString();
-  findDate = new Date().toISOString().substring(0, 10).split('-').reverse().join('.');
+  findDate = new Date()
+    .toISOString()
+    .substring(0, 10)
+    .split('-')
+    .reverse()
+    .join('.');
+  isCurrentDate = false;
 
   userData: UserDailyStats = {
     goalCalories: 0,
@@ -90,19 +102,27 @@ export class DailyMacrosComponent implements OnInit {
     },
   };
 
-  constructor(private service: MasterService, private addNutrientCardService: AddNutrientCardGQL, private toastr: ToastrService) {}
+  constructor(
+    private service: MasterService,
+    private addNutrientCardService: AddNutrientCardGQL,
+    private addWaterService: AddWaterToUserGQL,
+    readonly dialog: MatDialog,
+    private toastr: ToastrService
+  ) {}
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
     if (foundToken) {
       this.token = foundToken;
-      this.addNutrientCardService.mutate({ input: { token: this.token } }).subscribe({
-        next() {
-          console.log('success')
-        },
-        error(error) {
-          console.log(error)
-        },
-      })
+      this.addNutrientCardService
+        .mutate({ input: { token: this.token } })
+        .subscribe({
+          next: () => {
+            console.log('success');
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
       this.service.getUserDailyNutrients(this.token).valueChanges.subscribe({
         next: ({ data, loading }: any) => {
           this.fetchUserNutritionData(data, loading);
@@ -117,12 +137,13 @@ export class DailyMacrosComponent implements OnInit {
     }
   }
 
-  onClick() {
+  onSwapDate() {
     const foundData = this.allData.dailyNutrients.find(
       (item: any) =>
         item.addedDate === this.findDate.split('-').reverse().join('.')
     );
     if (foundData) {
+      this.findDate !== this.currentDate ? this.isCurrentDate = true : this.isCurrentDate = false
       this.userData = { ...this.allData, dailyNutrients: foundData };
     } else {
       this.userData = this.emptyUserData;
@@ -130,7 +151,39 @@ export class DailyMacrosComponent implements OnInit {
         .split('-')
         .reverse()
         .join('.');
+      this.findDate !== this.currentDate ? this.isCurrentDate = true : this.isCurrentDate = false
     }
+  }
+
+  onAddFood() {
+    const foodDialogRef = this.dialog.open(FoodsSearchComponent, {
+      width: '60%',
+      height: '600px',
+    });
+    foodDialogRef.afterClosed().subscribe((result) => {
+      console.log(`dialog result ${result}`);
+    });
+  }
+
+  onAddWater() {
+    this.addWaterService.mutate({ input: { token: this.token } }).subscribe({
+      next: () => {
+        this.toastr.success('Successfully added water', 'Success');
+      },
+      error(error) {
+        console.log(error);
+      },
+    });
+  }
+
+  onAddSteps() {
+    const stepsDialogRef = this.dialog.open(StepsAddComponent, {
+      width: '60%',
+      height: '300px',
+    });
+    stepsDialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
   }
 
   onDelete(mealId: string, mealName: string) {
@@ -169,7 +222,7 @@ export class DailyMacrosComponent implements OnInit {
       this.findDate = this.findDate.split('-').reverse().join('.');
       const todayData = dataArr.getUser.dailyNutrients.find(
         (item: DailyNutrient) => {
-          return item.addedDate === this.findDate
+          return item.addedDate === this.findDate;
         }
       );
       if (todayData) {

@@ -8,8 +8,8 @@ import { MasterService } from '../../services/master.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DialogRef } from '@angular/cdk/dialog';
-import { FoodsComponent } from '../foods/foods.component';
 import { MatInputModule } from '@angular/material/input';
+import { DailyMacrosComponent } from '../daily-macros/daily-macros.component';
 
 @Component({
   selector: 'app-foods-search',
@@ -24,7 +24,7 @@ export class FoodsSearchComponent implements OnInit {
     private searchFoodsService: SearchFoodsGQL,
     private addFoodService: AddFoodToUserGQL,
     private toastr: ToastrService,
-    private dialogRef: DialogRef<FoodsComponent>
+    private foodDialogRef: DialogRef<DailyMacrosComponent>
   ) {}
   loading = false;
   foods: any;
@@ -113,7 +113,7 @@ export class FoodsSearchComponent implements OnInit {
           closeButton: true,
           progressBar: true,
         });
-        this.dialogRef.close()
+        this.foodDialogRef.close()
       },
       error: (error) => {
         console.log(error);
