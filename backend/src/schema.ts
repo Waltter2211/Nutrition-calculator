@@ -23,6 +23,10 @@ export const typeDefs = `#graphql
         addNutrientCard(input: NutrientCardInput!): UpdateSuccess
         "Mutation to add Food for user"
         addFoodToUser(input: AddFoodToUserInput!): UpdateSuccess
+        "Mutation to add Water for user"
+        addWaterToUser(input: AddWaterToUserInput!): UpdateSuccess
+        "Mutation to add Steps for user"
+        addStepsToUser(input: AddStepsToUserInput!): UpdateSuccess
         "Mutation to update user"
         updateUserInfo(input: UpdateUserInput!): UpdateSuccess
         "Mutation to delete user"
@@ -143,6 +147,17 @@ export const typeDefs = `#graphql
         proteinsCount: Int!
         carbohydratesCount: Int!
         fatsCount: Int!
+    }
+
+    "AddWaterToUser input for adding water to user's nutrient card"
+    input AddWaterToUserInput {
+        token: String!
+    }
+
+    "AddStepsToUser input for adding steps to user's nutrient card"
+    input AddStepsToUserInput {
+        token: String!
+        stepsCount: Int!
     }
 
     "DeleteMealFromUser input for deleting meal from user"

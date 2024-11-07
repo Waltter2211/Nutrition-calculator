@@ -413,6 +413,54 @@ export const resolvers = {
       }
     },
 
+    // Resolver for adding water to user
+    addWaterToUser: async (_: any, { input }: any) => {
+      // Try to verify user token
+      try {
+        const verifiedToken = jwtTokenVerifier(input.token);
+        if (typeof verifiedToken === "object") {
+          const foundUser = await User.findById(verifiedToken.userId);
+          if (foundUser) {
+            const foundNutrientCard = await NutrientCard.findOne({
+              $and: [
+                { user: foundUser._id },
+                {
+                  addedDate: new Date()
+                    .toISOString()
+                    .substring(0, 10)
+                    .split("-")
+                    .reverse()
+                    .join("."),
+                },
+              ],
+            });
+            if (foundNutrientCard) {
+              // Convert and create updated nutrient card object
+              const convertedObj = foundNutrientCard.toObject();
+              const updatedNutrientCardObj = {
+                ...convertedObj,
+                dailyWater: (convertedObj.dailyWater += 1),
+              };
+              return await NutrientCard.updateOne(
+                { _id: foundNutrientCard._id },
+                updatedNutrientCardObj
+              );
+            }
+          } else {
+            throw new Error("No valid user found");
+          }
+        } else {
+          throw new Error("Invalid token");
+        }
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addStepsToUser: async (_:any, { input }:any) => {
+      console.log(input)
+    },
+
     // Resolver function for deleting meal from user
     deleteMealFromUser: async (_: any, { input }: any) => {
       // Try to delete meal from user
@@ -420,10 +468,8 @@ export const resolvers = {
         // Check if user has valid token
         const verifiedToken = jwtTokenVerifier(input.token);
         if (typeof verifiedToken === "object") {
-          // Fetch user from database
           const foundUser = await User.findById(verifiedToken.userId);
           if (foundUser) {
-            // Fetch meal from database
             const foundMeal = await Meal.findById(input.mealId);
             if (foundMeal) {
               // If user and meal are found try to fetch nutrient card
