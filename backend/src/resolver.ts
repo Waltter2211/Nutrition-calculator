@@ -457,8 +457,48 @@ export const resolvers = {
       }
     },
 
-    addStepsToUser: async (_:any, { input }:any) => {
-      console.log(input)
+    // Resolver for adding steps to user
+    addStepsToUser: async (_: any, { input }: any) => {
+      // Try to verify user token
+      try {
+        const verifiedToken = jwtTokenVerifier(input.token);
+        if (typeof verifiedToken === "object") {
+          const foundUser = await User.findById(verifiedToken.userId);
+          if (foundUser) {
+            const foundNutrientCard = await NutrientCard.findOne({
+              $and: [
+                { user: foundUser._id },
+                {
+                  addedDate: new Date()
+                    .toISOString()
+                    .substring(0, 10)
+                    .split("-")
+                    .reverse()
+                    .join("."),
+                },
+              ],
+            });
+            if (foundNutrientCard) {
+              // Convert and create updated nutrient card object
+              const convertedObj = foundNutrientCard.toObject();
+              const updatedNutrientCardObj = {
+                ...convertedObj,
+                dailySteps: (convertedObj.dailySteps += input.stepsCount),
+              };
+              return await NutrientCard.updateOne(
+                { _id: foundNutrientCard._id },
+                updatedNutrientCardObj
+              );
+            }
+          } else {
+            throw new Error("No valid user found");
+          }
+        } else {
+          throw new Error("Invalid token");
+        }
+      } catch (error) {
+        return error;
+      }
     },
 
     // Resolver function for deleting meal from user
