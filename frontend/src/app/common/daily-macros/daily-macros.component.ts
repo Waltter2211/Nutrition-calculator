@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MasterService } from '../../services/master.service';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -19,6 +19,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { StepsAddComponent } from '../steps-add/steps-add.component';
 import { FoodsSearchComponent } from '../foods-search/foods-search.component';
+import { ShareDateService } from '../../services/share-date.service';
 
 @Component({
   selector: 'app-daily-macros',
@@ -107,8 +108,10 @@ export class DailyMacrosComponent implements OnInit {
     private addNutrientCardService: AddNutrientCardGQL,
     private addWaterService: AddWaterToUserGQL,
     readonly dialog: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dateDataService: ShareDateService
   ) {}
+
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
     if (foundToken) {
@@ -126,6 +129,7 @@ export class DailyMacrosComponent implements OnInit {
       this.service.getUserDailyNutrients(this.token).valueChanges.subscribe({
         next: ({ data, loading }: any) => {
           this.fetchUserNutritionData(data, loading);
+          this.onShareDate()
         },
         error: (error) => {
           console.log(error);
@@ -137,6 +141,10 @@ export class DailyMacrosComponent implements OnInit {
     }
   }
 
+  onShareDate() {
+    this.dateDataService.setDateData(this.findDate.split('-').reverse().join('.'))
+  }
+
   onSwapDate() {
     const foundData = this.allData.dailyNutrients.find(
       (item: any) =>
@@ -145,6 +153,7 @@ export class DailyMacrosComponent implements OnInit {
     if (foundData) {
       this.findDate !== this.currentDate ? this.isCurrentDate = true : this.isCurrentDate = false
       this.userData = { ...this.allData, dailyNutrients: foundData };
+      this.onShareDate()
     } else {
       this.userData = this.emptyUserData;
       this.emptyUserData.dailyNutrients.addedDate = this.findDate
@@ -152,6 +161,7 @@ export class DailyMacrosComponent implements OnInit {
         .reverse()
         .join('.');
       this.findDate !== this.currentDate ? this.isCurrentDate = true : this.isCurrentDate = false
+      this.onShareDate()
     }
   }
 

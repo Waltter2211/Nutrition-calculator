@@ -10,6 +10,8 @@ export const typeDefs = `#graphql
         getAllFoods: [Food]
         "Query for fetching single Food"
         getFood(foodId: String!): Food
+        "Query for fetching weekly nutrient data"
+        getWeeklyData(token: String!, date: String!): [NutrientCard]
         "Query for fetching single or multiple Foods with name"
         searchFoods(foodsName: String): [Food]!
     }

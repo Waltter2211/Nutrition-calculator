@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { CommonModule } from '@angular/common';
 import { NavComponent } from '../nav/nav.component';
@@ -6,6 +6,7 @@ import { MasterService } from '../../services/master.service';
 import { DailyMacrosComponent } from '../daily-macros/daily-macros.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { ErrorComponent } from '../error/error.component';
+import { WeeklyStatsComponent } from '../weekly-stats/weekly-stats.component';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { ErrorComponent } from '../error/error.component';
     CommonModule,
     NavComponent,
     DailyMacrosComponent,
+    WeeklyStatsComponent,
     LoadingComponent,
     ErrorComponent
   ],

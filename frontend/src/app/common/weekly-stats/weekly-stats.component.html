@@ -1,0 +1,20 @@
+<div class="main-div">
+  @if (isError) {
+  <app-error></app-error>
+  } @else if (loading) {
+  <app-loading></app-loading>
+  } @else {
+  <div class="holder-div">
+    <div class="chart-div">
+      @for (dayData of weeklyData; track dayData) {
+      <div class="chart-inner-div">
+        <div class="chart-diagram">
+          <p>{{ dayData.dailyCalories }}</p>
+        </div>
+        <p>Monday</p>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

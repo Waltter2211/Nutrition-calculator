@@ -1,6 +1,7 @@
 import {
   jwtTokenVerifier,
   mapperHelperFunction,
+  getWeeklyDataHelper,
 } from "./helpers/helperFunctions.js";
 import { Food } from "./models/food.js";
 import { Meal } from "./models/meal.js";
@@ -55,6 +56,108 @@ export const resolvers = {
     getMeal: async (_: any, { mealId }: { mealId: string }) => {
       try {
         return await Meal.findById(mealId);
+      } catch (error) {
+        return error;
+      }
+    },
+    // Resolver for fetching nutrient card with it's ID
+    getWeeklyData: async (
+      _: any,
+      { token, date }: { token: string; date: string }
+    ) => {
+      try {
+        const verifiedToken = jwtTokenVerifier(token);
+        if (typeof verifiedToken === "object") {
+          const { userId } = verifiedToken;
+          const dateParse =
+            date.split(".").reverse().join("-") + "T00:00:00.000Z";
+          let dateNumber = new Date(dateParse).getDay();
+
+          if (dateNumber === 0) {
+            dateNumber += 7;
+          }
+
+          let weeklyDataArr = [];
+
+          switch (dateNumber) {
+            case 1:
+              console.log("Monday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            case 2:
+              console.log("Tuesday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            case 3:
+              console.log("Wednesday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            case 4:
+              console.log("Thursday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            case 5:
+              console.log("Friday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            case 6:
+              console.log("Saturday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            case 7:
+              console.log("Sunday");
+              weeklyDataArr = await getWeeklyDataHelper(
+                dateParse,
+                userId,
+                NutrientCard,
+                dateNumber
+              );
+              return weeklyDataArr;
+
+            default:
+              console.log("Error");
+              break;
+          }
+        } else {
+          // Returns invalid user token on failure
+          throw new Error("Invalid user token");
+        }
       } catch (error) {
         return error;
       }

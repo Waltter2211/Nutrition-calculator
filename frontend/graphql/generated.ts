@@ -221,6 +221,8 @@ export type Query = {
   getMeal?: Maybe<Meal>;
   /** Query for fetching user with token */
   getUser?: Maybe<User>;
+  /** Query for fetching weekly nutrient data */
+  getWeeklyData?: Maybe<Array<Maybe<NutrientCard>>>;
   /** Test Query */
   hello?: Maybe<Scalars['String']['output']>;
   /** Query for fetching single or multiple Foods with name */
@@ -239,6 +241,12 @@ export type QueryGetMealArgs = {
 
 
 export type QueryGetUserArgs = {
+  token: Scalars['String']['input'];
+};
+
+
+export type QueryGetWeeklyDataArgs = {
+  date: Scalars['String']['input'];
   token: Scalars['String']['input'];
 };
 
@@ -347,6 +355,14 @@ export type GetUserQueryVariables = Exact<{
 
 
 export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', _id?: string | null, username: string, email: string } | null };
+
+export type GetWeeklyDataQueryVariables = Exact<{
+  token: Scalars['String']['input'];
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetWeeklyDataQuery = { __typename?: 'Query', getWeeklyData?: Array<{ __typename?: 'NutrientCard', _id: string, addedDate: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, dailyWater: number, dailySteps: number } | null> | null };
 
 export type SearchFoodsQueryVariables = Exact<{
   foodsName?: InputMaybe<Scalars['String']['input']>;
@@ -579,6 +595,31 @@ export const GetUserDocument = gql`
   })
   export class GetUserGQL extends Apollo.Query<GetUserQuery, GetUserQueryVariables> {
     document = GetUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetWeeklyDataDocument = gql`
+    query GetWeeklyData($token: String!, $date: String!) {
+  getWeeklyData(token: $token, date: $date) {
+    _id
+    addedDate
+    dailyCalories
+    dailyProteins
+    dailyCarbohydrates
+    dailyFats
+    dailyWater
+    dailySteps
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetWeeklyDataGQL extends Apollo.Query<GetWeeklyDataQuery, GetWeeklyDataQueryVariables> {
+    document = GetWeeklyDataDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
