@@ -8,9 +8,10 @@
     <div class="chart-div">
       @for (dayData of weeklyData; track dayData) {
       <div class="chart-inner-div">
-        <div class="chart-diagram">
+        <!-- <div class="chart-diagram">
           <p>{{ dayData.dailyCalories }}</p>
-        </div>
+        </div> -->
+        <progress class="chart-progress" max="2500" value="{{ dayData.dailyCalories }}"></progress>
         <p>Monday</p>
       </div>
       }
