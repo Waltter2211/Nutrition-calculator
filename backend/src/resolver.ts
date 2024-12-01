@@ -148,6 +148,7 @@ export const resolvers = {
                 NutrientCard,
                 dateNumber
               );
+              console.log("sundayyy",weeklyDataArr)
               return weeklyDataArr;
 
             default:

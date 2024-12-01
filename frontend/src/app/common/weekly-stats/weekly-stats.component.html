@@ -6,13 +6,13 @@
   } @else {
   <div class="holder-div">
     <div class="chart-div">
-      @for (dayData of weeklyData; track dayData) {
+      @for (dayData of weeklyData; track dayData._id; let idx = $index) {
       <div class="chart-inner-div">
         <!-- <div class="chart-diagram">
           <p>{{ dayData.dailyCalories }}</p>
         </div> -->
-        <progress class="chart-progress" max="2500" value="{{ dayData.dailyCalories }}"></progress>
-        <p>Monday</p>
+        <progress class="chart-progress" max="{{ dayData.user.goalCalories }}" value="{{ dayData.dailyCalories }}"></progress>
+        <p>{{ weekDays[idx] }}</p>
       </div>
       }
     </div>

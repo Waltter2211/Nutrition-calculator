@@ -3,11 +3,12 @@ import { GetWeeklyDataGQL, NutrientCard } from '../../../../graphql/generated';
 import { ShareDateService } from '../../services/share-date.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { ErrorComponent } from '../error/error.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-weekly-stats',
   standalone: true,
-  imports: [LoadingComponent, ErrorComponent],
+  imports: [LoadingComponent, ErrorComponent, CommonModule],
   templateUrl: './weekly-stats.component.html',
   styleUrl: './weekly-stats.component.css',
 })
@@ -19,9 +20,10 @@ export class WeeklyStatsComponent implements OnInit {
 
   token = '';
   isError = false;
-  weeklyData: any;
+  weeklyData: any = [];
   dataDate = '';
   loading = false
+  weekDays: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');

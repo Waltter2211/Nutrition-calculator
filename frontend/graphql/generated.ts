@@ -362,7 +362,7 @@ export type GetWeeklyDataQueryVariables = Exact<{
 }>;
 
 
-export type GetWeeklyDataQuery = { __typename?: 'Query', getWeeklyData?: Array<{ __typename?: 'NutrientCard', _id: string, addedDate: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, dailyWater: number, dailySteps: number } | null> | null };
+export type GetWeeklyDataQuery = { __typename?: 'Query', getWeeklyData?: Array<{ __typename?: 'NutrientCard', _id: string, addedDate: string, dailyCalories: number, dailyProteins: number, dailyCarbohydrates: number, dailyFats: number, dailyWater: number, dailySteps: number, user: { __typename?: 'User', goalCalories: number, goalCarbohydrates: number, goalFats: number, goalProteins: number, goalSteps: number, goalWater: number } } | null> | null };
 
 export type SearchFoodsQueryVariables = Exact<{
   foodsName?: InputMaybe<Scalars['String']['input']>;
@@ -611,6 +611,14 @@ export const GetWeeklyDataDocument = gql`
     dailyFats
     dailyWater
     dailySteps
+    user {
+      goalCalories
+      goalCarbohydrates
+      goalFats
+      goalProteins
+      goalSteps
+      goalWater
+    }
   }
 }
     `;

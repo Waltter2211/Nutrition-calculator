@@ -11,6 +11,14 @@ export const GET_WEEKLY_DATA = gql`
       dailyFats
       dailyWater
       dailySteps
+      user {
+        goalCalories
+        goalCarbohydrates
+        goalFats
+        goalProteins
+        goalSteps
+        goalWater
+      }
     }
   }
 `;
