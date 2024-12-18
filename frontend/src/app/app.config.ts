@@ -13,6 +13,7 @@ import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
 import { provideToastr } from 'ngx-toastr';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,7 +28,8 @@ export const appConfig: ApplicationConfig = {
 
       return {
         link: httpLink.create({
-          uri: 'http://localhost:4000',
+          /* uri: 'http://localhost:4000', */
+          uri: environment.backend_url,
         }),
         cache: new InMemoryCache(),
       };

@@ -1,0 +1,32 @@
+services:
+  mongo-cont:
+    image: mongo
+    ports:
+      - "27018:27017"
+    networks:
+      - "fs-app"
+  backend-cont:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4000"
+    environment:
+      - MONGO_URL=mongodb://mongo-cont:27017/nutrition-calculator-dev
+    depends_on:
+      - "mongo-cont"
+    networks:
+      - "fs-app"
+  frontend-cont:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - "backend-cont"
+    networks:
+      - "fs-app"
+networks:
+  fs-app:
+    driver: bridge

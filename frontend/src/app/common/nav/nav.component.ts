@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MasterService } from '../../services/master.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -20,7 +21,7 @@ export class NavComponent implements OnInit {
     email: '',
   };
 
-  constructor(private service: MasterService) {}
+  constructor(private service: MasterService, private router: Router,) {}
 
   ngOnInit(): void {
     const foundToken = localStorage.getItem('token');
@@ -44,6 +45,6 @@ export class NavComponent implements OnInit {
 
   onLogout() {
     localStorage.clear();
-    window.location.reload();
+    this.router.navigateByUrl('/')
   }
 }

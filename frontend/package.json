@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:frontend": "node dist/frontend/server/server.mjs",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "dev": "ng serve --configuration development"
   },
   "private": true,
   "dependencies": {

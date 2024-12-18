@@ -45,14 +45,15 @@
 }
 
 .chart-inner-div {
-  width: 10%;
+  width: 13%;
   height: 100%;
-  /* background-color: red; */
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   row-gap: 130px;
+  border-radius: 10px;
 }
 
 .chart-diagram {
