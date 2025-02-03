@@ -5,7 +5,7 @@
 ![Angular](https://img.shields.io/badge/Angular-v18.2.0-red)
 
 ## Description
-Simple messaging app where you can add contacts and send messages.
+Nutrition tracker app where you can track your daily macros.
 
 ## Technologies used
 * MongoDB
