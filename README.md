@@ -2,7 +2,7 @@
 
 ![Node.js](https://img.shields.io/badge/Node.js-v20.14.0-green)
 ![Express](https://img.shields.io/badge/Express-v4.21.2-orange)
-![GraohQL](https://img.shields.io/badge/GraphQL-v16.9.0-yellow)
+![GraohQL](https://img.shields.io/badge/GraphQL-v16.9.0-blue)
 ![Angular](https://img.shields.io/badge/Angular-v18.2.0-red)
 
 ## Description
